@@ -9,5 +9,7 @@ public class Keep
     public string Description { get; set; }
     public string Img { get; set; }
     public int Kept { get; set; }
+    public Profile Creator { get; set; }
+
 }
 // Kept is || reportCount inHelpReviews lecture
