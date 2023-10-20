@@ -32,9 +32,10 @@ public class KeepsService
         return foundKeep;
     }
 
-    internal Keep UpdateKeep(Keep updateData)
+    internal Keep UpdateKeep(Keep updateData, string userId)
     {
         Keep original = this.GetById(updateData.Id);
+        if (original.CreatorId != userId) throw new Exception("unauthorized");
         original.Name = updateData.Name != null ? updateData.Name : original.Name;
         original.Description = updateData.Description != null ? updateData.Description : original.Description;
         original.Img = updateData.Img ?? original.Img;

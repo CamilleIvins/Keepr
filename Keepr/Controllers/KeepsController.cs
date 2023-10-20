@@ -58,14 +58,15 @@ public class KeepsController : ControllerBase
             return BadRequest(e.Message);
         }
     }
-
+    [Authorize]
     [HttpPut("{keepId}")]
-    public ActionResult<Keep> UpdateKeep([FromBody] Keep updateData, int keepId)
+    public async Task<ActionResult<Keep>> UpdateKeep([FromBody] Keep updateData, int keepId)
     {
         try
         {
+            Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
             updateData.Id = keepId;
-            Keep keep = _keepsService.UpdateKeep(updateData);
+            Keep keep = _keepsService.UpdateKeep(updateData, userInfo.Id);
             return Ok(keep);
         }
         catch (Exception e)
@@ -73,7 +74,7 @@ public class KeepsController : ControllerBase
             return BadRequest(e.Message);
         }
     }
-    // need to add authorizations
+    // need to add authorizations ✅
 
     [Authorize]
     [HttpDelete("{keepId}")]
