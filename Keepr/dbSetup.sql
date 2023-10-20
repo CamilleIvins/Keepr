@@ -1,5 +1,3 @@
--- Active: 1696955335701@@SG-CodeWorks-7896-mysql-master.servers.mongodirector.com@3306@Keepr
-
 CREATE TABLE
     IF NOT EXISTS accounts(
         id VARCHAR(255) NOT NULL primary key COMMENT 'primary key',
@@ -20,8 +18,7 @@ CREATE TABLE
         views INT DEFAULT 0,
         kept INT DEFAULT 0,
         createdAt DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Time Created',
-        FOREIGN KEY (creatorId) REFERENCES accounts (id) ON DELETE CASCADE,
-        FOREIGN KEY (kept) REFERENCES vaults (id) ON DELETE CASCADE
+        FOREIGN KEY (creatorId) REFERENCES accounts (id) ON DELETE CASCADE -- FOREIGN KEY (kept) REFERENCES vaults (id) ON DELETE CASCADE
     ) default charset utf8 COMMENT '';
 
 CREATE TABLE
