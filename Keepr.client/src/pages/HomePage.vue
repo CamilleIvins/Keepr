@@ -1,19 +1,37 @@
 <template>
-  <div class="home flex-grow-1 d-flex flex-column align-items-center justify-content-center">
-    <div class="home-card p-5 bg-white rounded elevation-3">
-      <img src="https://bcw.blob.core.windows.net/public/img/8600856373152463" alt="CodeWorks Logo"
-        class="rounded-circle">
-      <h1 class="my-5 bg-dark text-white p-3 rounded text-center">
-        Vue 3 Starter
-      </h1>
+  <section class="row my-2 justify-content-around">
+    <div class="col-md-3 col-6 px-2 py-1">
+      {{ keeps.name }}
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
+import { computed, onMounted } from 'vue';
+import { keepsService } from '../services/KeepsService.js';
+import { logger } from '../utils/Logger.js';
+import Pop from '../utils/Pop.js';
+import { AppState } from "../AppState.js"
+
+
 export default {
   setup() {
-    return {}
+    onMounted(() => {
+      getKeeps();
+    });
+
+    async function getKeeps() {
+      try {
+        await keepsService.getKeeps()
+        logger.log("HomePage Keep GET")
+      } catch (error) {
+        Pop.error(error)
+      }
+    }
+    return {
+      // computed
+      keeps: computed(() => AppState.keeps),
+    }
   }
 }
 </script>
