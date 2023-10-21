@@ -15,3 +15,8 @@ public class Keep
 }
 // Kept is || reportCount inHelpReviews lecture
 // virtual properties are returned from tables, not on the table itself
+
+public class VaultKeepViewModel : Keep
+{
+    public int VaultKeepId { get; set; }
+}
