@@ -22,14 +22,6 @@ public class VaultKeepsService
         return newVK;
     }
 
-    internal VaultKeep DeleteVK(int vaultKeepId, string userId)
-    {
-        VaultKeep vk = this.GetVKById(vaultKeepId);
-        if (vk.CreatorId != userId) throw new Exception("unauthorized");
-        _repo.Delete(vk.Id);
-        return vk;
-    }
-
     internal VaultKeep GetVKById(int vaultKeepId)
     {
         VaultKeep vaultKeep = _repo.GetById(vaultKeepId);
@@ -44,4 +36,15 @@ public class VaultKeepsService
     //     List<VaultKeepViewModel> vaultKeeps = _repo.GetVKByVault(vaultId);
     //     return vaultKeeps;
     // }
+
+
+
+    internal VaultKeep DeleteVK(int vaultKeepId, string userId)
+    {
+        VaultKeep vk = this.GetVKById(vaultKeepId);
+        if (vk.CreatorId != userId) throw new Exception("Unauthorized");
+        _repo.Delete(vk.Id);
+        return vk;
+    }
+
 }
