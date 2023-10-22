@@ -1,3 +1,4 @@
+
 namespace Keepr.Repositories;
 
 public class AccountsRepository
@@ -44,5 +45,7 @@ public class AccountsRepository
     _db.Execute(sql, update);
     return update;
   }
+  // Profile methods - GET profile should be able to use above get
+
 }
 

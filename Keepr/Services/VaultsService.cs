@@ -52,4 +52,11 @@ public class VaultsService
         _repo.Delete(vault.Id);
         return vault;
     }
+
+    // From Account controller
+    internal List<Vault> GetVaultsByCreator(string userId)
+    {
+        List<Vault> myVaults = _repo.GetByCreator(userId);
+        return myVaults;
+    }
 }

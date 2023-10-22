@@ -95,4 +95,22 @@ public class VaultsRepository : IRepository<Vault, int>
        ;";
         _db.Execute(sql, new { id });
     }
+    // Accounts-based GET
+    internal List<Vault> GetByCreator(string userId)
+    {
+        string sql = @"
+        SELECT
+        vaults.*,
+        acct.*
+        FROM vaults
+        JOIN accounts acct ON acct.id = vaults.creatorId
+        WHERE vaults.creatorId = @userId
+        ;";
+        List<Vault> myVaults = _db.Query<Vault, Account, Vault>(sql, (vault, account) =>
+        {
+            vault.Creator = account;
+            return vault;
+        }, new { userId }).ToList();
+        return myVaults;
+    }
 }
