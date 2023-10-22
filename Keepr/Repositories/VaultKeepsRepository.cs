@@ -53,6 +53,11 @@ public class VaultKeepsRepository
 
     public void Delete(int id)
     {
-        throw new NotImplementedException();
+        string sql = @"
+       DELETE FROM vaultKeeps
+       WHERE id = @id
+       LIMIT 1
+       ;";
+        _db.Execute(sql, new { id });
     }
 }
