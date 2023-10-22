@@ -1,7 +1,7 @@
 <template>
   <section class="row my-2 justify-content-around">
-    <div class="col-md-3 col-6 px-2 py-1">
-      {{ keeps.name }}
+    <div class="col-md-3 col-6 masonry-layout">
+      {{ keeps }}
     </div>
   </section>
 </template>
@@ -12,6 +12,7 @@ import { keepsService } from '../services/KeepsService.js';
 import { logger } from '../utils/Logger.js';
 import Pop from '../utils/Pop.js';
 import { AppState } from "../AppState.js"
+import { Keep } from '../models/Keep.js';
 
 
 export default {
@@ -22,7 +23,7 @@ export default {
 
     async function getKeeps() {
       try {
-        await keepsService.getKeeps()
+        await keepsService.getKeeps();
         logger.log("HomePage Keep GET")
       } catch (error) {
         Pop.error(error)
@@ -55,5 +56,11 @@ export default {
       object-position: center;
     }
   }
+}
+
+.masonry-layout {
+  $gap: 1.25em;
+  columns: 200px;
+  column-gap: $gap;
 }
 </style>
