@@ -61,37 +61,40 @@ public class VaultKeepsRepository
         _db.Execute(sql, new { id });
     }
 
-
     internal List<VaultKeepViewModel> GetVKs(int vaultId)
     {
-        string sql = @"
-        SELECT
-        vks.*,
-        vaults.*,
-        keeps.*,
-        keepVault.*
-        
-        FROM vaultKeeps vks
-            JOIN vaults ON vaults.id = vks.vaultId
-            JOIN keeps ON keeps.id = vks.keepId
-            JOIN keeps keepVault ON keepVault.vaultKeepId = vault.Id
-            WHERE vks.vaultId = @vaultId
-        ;";
-        List<VaultKeepViewModel> vaultKeeps = _db.Query<VaultKeep, Vault, VaultKeepViewModel, Vault, VaultKeep>(sql, (vk, vault, keep, keepHome) =>
-        {
-            vk.VaultId = vault.Id;
-            keep.VaultKeepId = keepHome.Id;
-            vk.KeepId = keep.Id;
-            // model.VaultKeepId = vk.VaultId;
-            // model.Id = vk.KeepId;
-            // vk.VaultId = vault.Id;
-
-            // vk.KeepId = model.Id;
-            // vk.VaultId = model.VaultKeepId;
-            return vk;
-        }, new { vaultId }).ToList();
-        return vaultKeeps;
+        throw new Exception();
     }
+    // internal List<VaultKeepViewModel> GetVKs(int vaultId)
+    // {
+    //     string sql = @"
+    //     SELECT
+    //     vks.*,
+    //     vaults.*,
+    //     keeps.*,
+    //     keepVault.*
+
+    //     FROM vaultKeeps vks
+    //         JOIN vaults ON vaults.id = vks.vaultId
+    //         JOIN keeps ON keeps.id = vks.keepId
+    //         JOIN keeps keepVault ON keepVault.vaultKeepId = vault.Id
+    //         WHERE vks.vaultId = @vaultId
+    //     ;";
+    //     List<VaultKeepViewModel> vaultKeeps = _db.Query<VaultKeep, Vault, VaultKeepViewModel, Vault, VaultKeep>(sql, (vk, vault, keep, keepHome) =>
+    //     {
+    //         vk.VaultId = vault.Id;
+    //         keep.VaultKeepId = keepHome.Id;
+    //         vk.KeepId = keep.Id;
+    //         // model.VaultKeepId = vk.VaultId;
+    //         // model.Id = vk.KeepId;
+    //         // vk.VaultId = vault.Id;
+
+    //         // vk.KeepId = model.Id;
+    //         // vk.VaultId = model.VaultKeepId;
+    //         return vk;
+    //     }, new { vaultId }).ToList();
+    //     return vaultKeeps;
+    // }
     // {
     //     string sql = @"
     //     SELECT

@@ -1,11 +1,12 @@
 <template>
     <div class="component">
+        <!-- <div class="component col-md-3 col-6"> -->
         <div class="position-relative">
             <img :src="keep.img" class="keepCover">
             <div class="overlay-card text-light p-1">
                 <section class="row">
-                    <p class="d-flex align-items-center col-8 ps-3 my-0">{{ keep.name }}</p>
-                    <img class="rounded-circle col-4 my-0 profile-pic" :src="keep.creator.picture">
+                    <p class="d-flex align-items-center col-8 ps-3 my-0 fw-bold">{{ keep.name }}</p>
+                    <img class="rounded-circle col-4 my-0 pe-3 pb-2 profile-pic" :src="keep.creator.picture">
                 </section>
 
             </div>
@@ -62,10 +63,10 @@ export default {
 
 }
 
-@media screen and (min-width: 768px) {
+
+@media screen and (max-width: 768px) {
     .profile-pic {
         height: max-content;
-        padding: 2em;
     }
 }
 </style>

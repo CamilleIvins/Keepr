@@ -2,9 +2,14 @@
   <section class="container-fluid">
     <section class="my-2 row">
       <!-- <section class="row my-2 justify-content-around"> -->
+      <!-- <div v-for="keep in keeps" :key="keep.id" class=""> -->
+
       <div v-for="keep in keeps" :key="keep.id" class="col-md-3 col-6">
-        <!-- {{ keeps }} -->
-        <KeepCard :keep="keep" />
+        <div class="masonry-layout">
+          <!-- {{ keeps }} -->
+          <KeepCard :keep="keep" />
+        </div>
+
       </div>
     </section>
   </section>
@@ -70,11 +75,11 @@ export default {
   columns: 200px;
   column-gap: $gap;
 
-  // img {
-  //   max-height: 30dvh;
-  //   min-height: 15dvh;
-  //   width: 100%;
-  //   margin-bottom: $gap;
-  // }
+  div {
+    // max-height: 30dvh;
+    // min-height: 15dvh;
+    width: 100%;
+    margin-bottom: $gap;
+  }
 }
 </style>
