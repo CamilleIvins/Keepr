@@ -101,22 +101,5 @@ public class KeepsRepository : IRepository<Keep, int>
     }
     // @id matches the parameter, so NOT @keepId
 
-    internal List<VaultKeepViewModel> GetVKs(int vaultId)
-    {
-        string sql = @"
-        SELECT
-        vks.*,
-        keeps.*
-        FROM vaultKeeps vks
-            JOIN keeps ON keeps.id = vks.keepId
-            WHERE vks.creatorId = @creatorId
-        ;";
-        List<VaultKeepViewModel> vaultKeeps = _db.Query<VaultKeep, VaultKeepViewModel, VaultKeepViewModel>(sql, (vk, model) =>
-        {
-            vk.KeepId = model.Id;
-            vk.CreatorId = model.CreatorId;
-            return vk;
-        }, new { vaultId }).ToList();
-        return vaultKeeps;
-    }
+
 }

@@ -38,6 +38,13 @@ public class VaultKeepsService
     // }
 
 
+    internal List<VaultKeepViewModel> GetVKs(int vaultId, string userId)
+    {
+        Vault vault = _vaultsService.GetById(vaultId, userId);
+        List<VaultKeepViewModel> vKs = _repo.GetVKs(vaultId);
+
+        return vKs;
+    }
 
     internal VaultKeep DeleteVK(int vaultKeepId, string userId)
     {

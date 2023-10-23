@@ -113,7 +113,7 @@ namespace Keepr.Controllers
             {
                 Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
 
-                List<VaultKeepViewModel> vaultKeeps = _keepsService.GetVKs(vaultId, userInfo?.Id);
+                List<VaultKeepViewModel> vaultKeeps = _vaultKeepsService.GetVKs(vaultId, userInfo?.Id);
                 return vaultKeeps;
             }
             catch (Exception e)
