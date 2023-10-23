@@ -1,10 +1,13 @@
 <template>
     <div class="component">
-        <div class="keepCover position relative">
-            <img :src="keep.img" alt="">
+        <div class="position-relative">
+            <img :src="keep.img" class="keepCover">
             <div class="overlay-card text-light p-1">
-                <p class="col-8">{{ keep.name }}</p>
-                <p class="d-flex col-4">{{ keep.creator.picture }}</p>
+                <section class="row">
+                    <p class="d-flex align-items-center col-8 ps-3 my-0">{{ keep.name }}</p>
+                    <img class="rounded-circle col-4 my-0 profile-pic" :src="keep.creator.picture">
+                </section>
+
             </div>
         </div>
 
@@ -29,6 +32,9 @@ export default {
 <style lang="scss" scoped>
 .keepCover {
 
+    min-height: 15dvh;
+    border-radius: 15px;
+    width: 100%;
     object-fit: cover;
     object-position: center;
 }
@@ -47,6 +53,19 @@ export default {
             hsla(0, 0%, 0%, 0.021) 91%,
             hsla(0, 0%, 0%, 0.008) 95.2%,
             hsla(0, 0%, 0%, 0.002) 98.2%,
-            hsla(0, 0%, 0%, 0) 100%)
+            hsla(0, 0%, 0%, 0) 100%);
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+
+}
+
+@media screen and (min-width: 768px) {
+    .profile-pic {
+        height: max-content;
+        padding: 2em;
+    }
 }
 </style>

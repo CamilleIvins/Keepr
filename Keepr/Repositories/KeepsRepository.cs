@@ -71,7 +71,10 @@ public class KeepsRepository : IRepository<Keep, int>
         }, new { keepId }).FirstOrDefault();
         return foundKeep;
     }
-    // @keepId - remember it is singular!!!
+    // @keepId - remember it is singular!!!✅
+    // GET BY VAULT || Pictures in Album
+
+
     public void Update(Keep updateData)
     {
         string sql = @"
@@ -97,4 +100,23 @@ public class KeepsRepository : IRepository<Keep, int>
         _db.Execute(sql, new { id });
     }
     // @id matches the parameter, so NOT @keepId
+
+    internal List<VaultKeepViewModel> GetVKs(int vaultId)
+    {
+        string sql = @"
+        SELECT
+        vks.*,
+        keeps.*
+        FROM vaultKeeps vks
+            JOIN keeps ON keeps.id = vks.keepId
+            WHERE vks.creatorId = @creatorId
+        ;";
+        List<VaultKeepViewModel> vaultKeeps = _db.Query<VaultKeep, VaultKeepViewModel, VaultKeepViewModel>(sql, (vk, model) =>
+        {
+            vk.KeepId = model.Id;
+            vk.CreatorId = model.CreatorId;
+            return vk;
+        }, new { vaultId }).ToList();
+        return vaultKeeps;
+    }
 }

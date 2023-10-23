@@ -1,8 +1,12 @@
 <template>
-  <section class="row my-2 justify-content-around">
-    <div class="col-md-3 col-6 masonry-layout">
-      {{ keeps }}
-    </div>
+  <section class="container-fluid">
+    <section class="my-2 row">
+      <!-- <section class="row my-2 justify-content-around"> -->
+      <div v-for="keep in keeps" :key="keep.id" class="col-md-3 col-6">
+        <!-- {{ keeps }} -->
+        <KeepCard :keep="keep" />
+      </div>
+    </section>
   </section>
 </template>
 
@@ -13,6 +17,7 @@ import { logger } from '../utils/Logger.js';
 import Pop from '../utils/Pop.js';
 import { AppState } from "../AppState.js"
 import { Keep } from '../models/Keep.js';
+import KeepCard from '../components/KeepCard.vue';
 
 
 export default {
@@ -20,20 +25,21 @@ export default {
     onMounted(() => {
       getKeeps();
     });
-
     async function getKeeps() {
       try {
         await keepsService.getKeeps();
-        logger.log("HomePage Keep GET")
-      } catch (error) {
-        Pop.error(error)
+        logger.log("HomePage Keep GET");
+      }
+      catch (error) {
+        Pop.error(error);
       }
     }
     return {
       // computed
       keeps: computed(() => AppState.keeps),
-    }
-  }
+    };
+  },
+  components: { KeepCard }
 }
 </script>
 
@@ -58,9 +64,17 @@ export default {
   }
 }
 
+
 .masonry-layout {
   $gap: 1.25em;
   columns: 200px;
   column-gap: $gap;
+
+  // img {
+  //   max-height: 30dvh;
+  //   min-height: 15dvh;
+  //   width: 100%;
+  //   margin-bottom: $gap;
+  // }
 }
 </style>

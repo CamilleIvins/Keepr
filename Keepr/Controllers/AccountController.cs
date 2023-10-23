@@ -31,25 +31,26 @@ public class AccountController : ControllerBase
       return BadRequest(e.Message);
     }
 
-    [HttpGet("vaults")]
-    [Authorize]
-    async Task<ActionResult<List<Vault>>> AccountVaults(string userId)
-    {
-      try
-      {
-        Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
-        List<Vault> vaults = _vaultsService.GetVaultsByCreator(userInfo.Id);
-        return Ok(vaults);
-      }
-      catch (Exception e)
-      {
-        return BadRequest(e.Message);
-      }
-    }
     // NEED
     // NOTE - cannot do a public async on vault GET, but is not working w/o
     // vaults by account
     // keeps by account?? Maybe make profile - InstaCult
     // ability to edit account?? - InstaCult
+  }
+
+  [HttpGet("vaults")]
+  [Authorize]
+  public async Task<ActionResult<List<Vault>>> AccountVaults(string userId)
+  {
+    try
+    {
+      Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+      List<Vault> vaults = _vaultsService.GetVaultsByCreator(userInfo.Id);
+      return Ok(vaults);
+    }
+    catch (Exception e)
+    {
+      return BadRequest(e.Message);
+    }
   }
 }

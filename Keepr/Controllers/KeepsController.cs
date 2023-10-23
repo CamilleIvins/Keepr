@@ -59,6 +59,10 @@ public class KeepsController : ControllerBase
         }
     }
 
+    // GET KEEP BY VAULT || POST-IT
+    // Originates in VAULT
+
+
     [Authorize]
     [HttpPut("{keepId}")]
     public async Task<ActionResult<Keep>> UpdateKeep([FromBody] Keep updateData, int keepId)

@@ -13,12 +13,14 @@ namespace Keepr.Controllers
         private readonly VaultsService _vaultsService;
         private readonly Auth0Provider _auth;
         private readonly VaultKeepsService _vaultKeepsService;
+        private readonly KeepsService _keepsService;
 
-        public VaultsController(VaultsService vaultsService, Auth0Provider auth, VaultKeepsService vaultKeepsService)
+        public VaultsController(VaultsService vaultsService, Auth0Provider auth, VaultKeepsService vaultKeepsService, KeepsService keepsService)
         {
             _vaultsService = vaultsService;
             _auth = auth;
             _vaultKeepsService = vaultKeepsService;
+            _keepsService = keepsService;
         }
 
         [Authorize]
@@ -104,20 +106,21 @@ namespace Keepr.Controllers
 
         // VaultKEEPS
 
-        // [HttpGet("{vaultId}/keeps")]
-        // public async Task<ActionResult<List<VaultKeepViewModel>>> GetKeepsByVault(int vaultId, string userId)
-        // {
-        //     try
-        //     {
-        //         Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
+        [HttpGet("{vaultId}/keeps")]
+        public async Task<ActionResult<List<VaultKeepViewModel>>> GetKeepsByVault(int vaultId)
+        {
+            try
+            {
+                Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
 
-        //         List<VaultKeepViewModel> vaultKeeps = _vaultKeepsService.GetVKs(vaultId, userId);
-        //     }
-        //     catch (Exception e)
-        //     {
-        //         return BadRequest(e.Message);
-        //     }
-        // }
+                List<VaultKeepViewModel> vaultKeeps = _keepsService.GetVKs(vaultId, userInfo?.Id);
+                return vaultKeeps;
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
         // THIS REQUIRES THE VIEW MODELS
     }
 }

@@ -2,15 +2,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Keepr.Controllers;
 
 namespace Keepr.Services;
 
 public class KeepsService
 {
     private readonly KeepsRepository _repo;
-    public KeepsService(KeepsRepository repo)
+    private readonly VaultsService _vaultsService;
+    public KeepsService(KeepsRepository repo, VaultsService vaultsService)
     {
         _repo = repo;
+        _vaultsService = vaultsService;
     }
 
     internal Keep Create(Keep keepData)
@@ -51,4 +54,11 @@ public class KeepsService
         return keep;
     }
 
+    internal List<VaultKeepViewModel> GetVKs(int vaultId, string userId)
+    {
+        Vault vault = _vaultsService.GetById(vaultId, userId);
+        List<VaultKeepViewModel> vKs = _repo.GetVKs(vaultId);
+
+        return vKs;
+    }
 }

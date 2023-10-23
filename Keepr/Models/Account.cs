@@ -17,4 +17,4 @@ public class Account : Profile
 
 }
 
-// this is a trst to see if GitHub sync is working ✅
+// this is a test to see if GitHub sync is working ✅

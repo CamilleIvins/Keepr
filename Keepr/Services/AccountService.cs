@@ -33,9 +33,4 @@ public class AccountService
     return _repo.Edit(original);
   }
 
-  internal Profile GetById(string id)
-  {
-    Profile profile = _repo.GetById(id);
-    return profile;
-  }
 }
