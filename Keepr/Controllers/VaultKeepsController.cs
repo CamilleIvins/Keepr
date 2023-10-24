@@ -36,7 +36,7 @@ namespace Keepr.Controllers
             }
         }
 
-        [HttpDelete]
+        [HttpDelete("{vaultKeepId}")]
         [Authorize]
         public async Task<ActionResult<VaultKeep>> DeleteVK(int vaultKeepId)
         {

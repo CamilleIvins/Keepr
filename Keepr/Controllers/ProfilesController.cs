@@ -24,11 +24,11 @@ namespace Keepr.Controllers
         }
 
         [HttpGet("{profileId}")]
-        public ActionResult<Profile> GetProfile(string id)
+        public async Task<ActionResult<Profile>> GetProfile(string id)
         {
             try
             {
-                // Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
+                Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
                 Profile profile = _profilesService.GetById(id);
                 return Ok(profile);
             }

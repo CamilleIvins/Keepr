@@ -43,3 +43,5 @@ CREATE TABLE
         FOREIGN KEY (vaultId) REFERENCES vaults (id) ON DELETE CASCADE,
         FOREIGN KEY (keepId) REFERENCES keeps (id) ON DELETE CASCADE
     ) default charset utf8 COMMENT '';
+
+SELECT * FROM accounts WHERE id = "650b2a54c31ea10c7b4b13bf";

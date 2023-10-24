@@ -1,14 +1,16 @@
 <template>
   <section class="container-fluid">
     <section class="row">
-      <div class="about text-center">
-        <img :src="account.coverImg" alt="" class="elevation-4 account-cover">
+      <div class="about text-center px-0">
+        <img :src="account.coverImg" alt="" class="account-cover">
         <div class="welcome font-dancing">Welcome {{ account.name.slice(0, account.name.indexOf('@')) }}</div>
       </div>
       <div class="text-center">
         <img class="rounded-circle profile-pic" :src="account.picture" alt="" />
         <p>{{ account.email }}</p>
       </div>
+      <hr>
+
 
     </section>
   </section>
@@ -24,11 +26,16 @@
 </template>
 
 <script>
-import { computed } from 'vue';
+import { computed, ref, watchEffect } from 'vue';
 import { AppState } from '../AppState';
 export default {
   setup() {
+    const editable = ref({})
+    watchEffect(() => {
+      editable.value = { ...AppState.account }
+    })
     return {
+      editable,
       account: computed(() => AppState.account)
     }
   }
@@ -80,12 +87,11 @@ img.account-cover {
   height: 20dvh;
   position: relative;
   bottom: 15vh;
-  filter: drop-shadow(0 0 1px #ffffff);
+  filter: drop-shadow(0 0 8px #292828);
   /* box-shadow: 0 3px 3px -1px rgba(205, 205, 205, 0.2),
     0 5px 6px 0 rgba(205, 205, 205, 0.14),
     0 1px 8px 0 rgba(205, 205, 205, 0.12); */
-  box-shadow: 0 -0.5px 8px -0.5px #292828,
-    0 -1px 8px -2px #292828;
-
+  box-shadow: 0 -0.5px 8px -0.5px #ffffff,
+    0 -1px 8px -2px #ffffff;
 }
 </style>

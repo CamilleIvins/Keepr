@@ -1,14 +1,13 @@
 <template>
   <section class="container-fluid">
-    <section class="my-2 row">
+    <section class="my-2 masonry-layout">
       <!-- <section class="row my-2 justify-content-around"> -->
       <!-- <div v-for="keep in keeps" :key="keep.id" class=""> -->
 
-      <div v-for="keep in keeps" :key="keep.id" class="col-md-3 col-6">
-        <div class="masonry-layout">
-          <!-- {{ keeps }} -->
-          <KeepCard :keep="keep" />
-        </div>
+      <div v-for="keep in keeps" :key="keep.id" class="">
+
+        <!-- {{ keeps }} -->
+        <KeepCard :keep="keep" />
 
       </div>
     </section>
@@ -23,6 +22,8 @@ import Pop from '../utils/Pop.js';
 import { AppState } from "../AppState.js"
 import { Keep } from '../models/Keep.js';
 import KeepCard from '../components/KeepCard.vue';
+// import ModalWrapper from './ModalWrapper.vue';
+
 
 
 export default {
@@ -72,7 +73,7 @@ export default {
 
 .masonry-layout {
   $gap: 1.25em;
-  columns: 200px;
+  columns: 4;
   column-gap: $gap;
 
   div {
@@ -80,6 +81,21 @@ export default {
     // min-height: 15dvh;
     width: 100%;
     margin-bottom: $gap;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .masonry-layout {
+    $gap: 1.25em;
+    columns: 2;
+    column-gap: $gap;
+
+    div {
+      // max-height: 30dvh;
+      // min-height: 15dvh;
+      width: 100%;
+      margin-bottom: $gap;
+    }
   }
 }
 </style>
