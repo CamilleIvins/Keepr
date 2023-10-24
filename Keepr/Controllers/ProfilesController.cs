@@ -24,12 +24,12 @@ namespace Keepr.Controllers
         }
 
         [HttpGet("{profileId}")]
-        public async Task<ActionResult<Profile>> GetProfile(string id)
+        public ActionResult<Profile> GetProfile(string profileId)
         {
             try
             {
-                Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
-                Profile profile = _profilesService.GetById(id);
+                // Profile userInfo = await _auth.GetUserInfoAsync<Profile>(HttpContext);
+                Profile profile = _profilesService.GetById(profileId);
                 return Ok(profile);
             }
             catch (Exception e)
@@ -37,6 +37,8 @@ namespace Keepr.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+
         // match Postman endpoint EXACTLY profileId, NOT id
     }
 }

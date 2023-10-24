@@ -18,6 +18,8 @@ public class ProfilesService
     internal Profile GetById(string id)
     {
         Profile profile = _repo.GetById(id);
+        if (profile == null) throw new Exception($"Unable to find Profile with ID:{id}");
+
         return profile;
     }
 }

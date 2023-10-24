@@ -1,8 +1,8 @@
 <template>
-    <div class="component" @click="keepModal()">
+    <div class="component">
         <!-- <div class="component col-md-3 col-6"> -->
         <div class="position-relative">
-            <img :src="keep.img" class="keepCover">
+            <img :src="keep.img" class="keepCover" @click="keepModal()">
             <div class="overlay-card text-light p-1">
                 <section class="row">
                     <p class="d-flex align-items-center col-8 ps-3 my-0 fw-bold">{{ keep.name }}</p>
@@ -30,7 +30,7 @@ import { useRoute } from 'vue-router';
 import { logger } from '../utils/Logger.js';
 import { Modal } from 'bootstrap';
 export default {
-    props: { keep: { type: Keep || Object, required: true }, profile: { type: Profile || Object, required: true } },
+    props: { keep: { type: Keep || Object, required: true }, },
     // propsB: { } },
 
     setup() {

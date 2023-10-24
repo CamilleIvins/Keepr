@@ -1,15 +1,26 @@
 <template>
-    <div class="component">
+    <section class="container-fluid">
 
+        <section>
 
-    </div>
+        </section>
+        <section>
+
+        </section>
+        <section>
+
+        </section>
+
+    </section>
 </template>
 
 
 <script>
 import { AppState } from '../AppState';
 import { computed, reactive, onMounted } from 'vue';
+import { Vault } from '../models/Vault.js';
 export default {
+    props: { vault: { type: Vault, required: true }, },
     setup() {
         return {}
     }

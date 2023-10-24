@@ -10,11 +10,11 @@ async getKeeps(){
     AppState.keeps = res.data.map(k => new Keep(k))
 }
 
-async createKeepModal(keepId){
-    const res = await api.get(`api/keeps/${keepId}`)
-    // res.data.id = AppState.keeps.find(keep=>keep.id==keepId)
-AppState.activeKeep = new Keep(res.data)
-}
+// async createKeepModal(keepId){
+//     const res = await api.get(`api/keeps/${keepId}`)
+//     // res.data.id = AppState.keeps.find(keep=>keep.id==keepId)
+// AppState.activeKeep = new Keep(res.data)
+// }
 }
 
 export const keepsService = new KeepsService()

@@ -1,9 +1,11 @@
 <template>
-    <section class="container-fluid">
+    <section class="container-fluid" v-if="profile.id">
         <section class="row">
             <div class="about text-center">
                 <img :src="profile.coverImg" alt="" class="elevation-4 profile-cover">
-                <div class="welcome font-dancing">Welcome {{ profile.name.slice(0, profile.name.indexOf('@')) }}</div>
+                <div class="welcome font-dancing">Welcome,</div>
+                <p class="welcome my-0 fs-3">my name is</p>
+                <p class="welcome my-0 font-dancing">{{ profile.name.slice(0, profile.name.indexOf('@')) }}</p>
             </div>
             <div class="text-center">
                 <img class="rounded-circle profile-pic" :src="profile.picture" alt="" />
@@ -17,9 +19,36 @@
 
 <script>
 import { AppState } from '../AppState';
-import { computed, reactive, onMounted } from 'vue';
+import { computed, reactive, onMounted, watchEffect } from 'vue';
+import { useRoute } from 'vue-router';
+import { logger } from '../utils/Logger.js';
+import { profilesService } from '../services/ProfilesService.js';
+import Pop from '../utils/Pop.js';
+import { Keep } from '../models/Keep.js';
+import { Profile } from '../models/Account.js';
+
+
 export default {
+    // props: { keep: { type: Keep || Object, required: true }, profile: { type: Profile || Object, required: true } },
+
     setup() {
+        const route = useRoute()
+
+        watchEffect(() => {
+            getProfileById()
+        })
+
+        async function getProfileById() {
+            try {
+                const profileId = route.params.profileId
+                await profilesService.getProfileById(profileId)
+                logger.log(profileId)
+            } catch (error) {
+                logger.log(error)
+                Pop.error(error)
+
+            }
+        }
         return {
             profile: computed(() => AppState.activeProfile)
 

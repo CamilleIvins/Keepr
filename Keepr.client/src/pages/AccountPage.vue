@@ -1,14 +1,16 @@
 <template>
-  <section class="container-fluid">
+  <section class="container-fluid" v-if="account.id">
     <section class="row">
       <div class="about text-center px-0">
         <img :src="account.coverImg" alt="" class="account-cover">
         <div class="welcome font-dancing">Welcome {{ account.name.slice(0, account.name.indexOf('@')) }}</div>
-      </div>
-      <div class="text-center">
+        <!-- <div class="text-center"> -->
         <img class="rounded-circle profile-pic" :src="account.picture" alt="" />
+        <!-- </div> -->
         <p>{{ account.email }}</p>
       </div>
+      <p>My Vaults</p>
+      <p>{{ vault.name }}</p>
       <hr>
 
 
@@ -26,17 +28,32 @@
 </template>
 
 <script>
-import { computed, ref, watchEffect } from 'vue';
+import { computed, onMounted, ref, watchEffect } from 'vue';
 import { AppState } from '../AppState';
+import { accountService } from '../services/AccountService.js';
+import Pop from '../utils/Pop.js';
 export default {
   setup() {
+    onMounted(() => {
+      getMyVaults()
+    })
     const editable = ref({})
     watchEffect(() => {
       editable.value = { ...AppState.account }
-    })
+    });
+
+    async function getMyVaults() {
+      try {
+        await accountService.getMyVaults();
+      } catch (error) {
+        Pop.error(error);
+      }
+    }
+
     return {
       editable,
-      account: computed(() => AppState.account)
+      account: computed(() => AppState.account),
+      vault: computed(() => AppState.vaults.find(owner => owner.creatorId == AppState.account.id))
     }
   }
 }
@@ -50,7 +67,7 @@ export default {
 .welcome {
   position: relative;
   text-align: center;
-  bottom: 50%;
+  bottom: 35%;
   filter: drop-shadow(3px 8px 7px #292828);
   color: aliceblue;
   font-size: xxx-large;
