@@ -1,14 +1,18 @@
 <template>
     <div class="component">
         <!-- <div class="component col-md-3 col-6"> -->
-        <div class="position-relative">
-            <img :src="keep.img" class="keepCover" @click="keepModal()">
+        <div class="position-relative hover">
+            <!-- <ModalWrapper id="keep-modal"> -->
+            <img :src="keep.img" class="keepCover" @click="openKeepDetails()" data-bs-toggle="modal"
+                data-bs-target="#keep-modal">
+            <!-- </ModalWrapper> -->
             <div class="overlay-card text-light p-1">
                 <section class="row">
                     <p class="d-flex align-items-center col-8 ps-3 my-0 fw-bold">{{ keep.name }}</p>
-                    <router-link class="col-4" :to="{ name: 'Profile', params: { profileId: keep.creatorId } }">
+                    <router-link class="col-4 d-flex justify-content-end align-items-end align-items-md-center"
+                        :to="{ name: 'Profile', params: { profileId: keep.creatorId } }">
 
-                        <img class="rounded-circle col-12 my-0 pe-3 pb-2 profile-pic" :src="keep.creator.picture">
+                        <img class="rounded-circle col-12 my-0 p-md-1 profile-pic" :src="keep.creator.picture">
                     </router-link>
                 </section>
 
@@ -29,27 +33,39 @@ import Pop from '../utils/Pop.js';
 import { useRoute } from 'vue-router';
 import { logger } from '../utils/Logger.js';
 import { Modal } from 'bootstrap';
+import ModalWrapper from './ModalWrapper.vue';
 export default {
     props: { keep: { type: Keep || Object, required: true }, },
     // propsB: { } },
-
-    setup() {
-        const route = useRoute()
-
+    setup(props) {
+        // const route = useRoute()
         return {
-            async keepModal() {
-                // trycatch these
+            async openKeepDetails() {
                 try {
-                    const keepId = route.params.keepId
-                    const modalView = await keepsService.createKeepModal(keepId)
-                    logger.log(modalView)
-                    Modal.getOrCreateInstance('#keepModal').show()
-                } catch (error) {
-                    Pop.error(error)
+                    const keepId = props.keep.id;
+                    logger.log(keepId);
+                    await keepsService.getKeepById(keepId);
+                    // const modal = Modal.getOrCreateInstance('#keep-modal')
+                    // modal.show()
+                }
+                catch (error) {
+                    Pop.error(error);
                 }
             }
-        }
-    }
+            // async keepModal() {
+            //     // trycatch these
+            //     try {
+            //         const keepId = route.params.keepId
+            //         const modalView = await keepsService.createKeepModal(keepId)
+            //         logger.log(modalView)
+            //         Modal.getOrCreateInstance('#keepModal').show()
+            //     } catch (error) {
+            //         Pop.error(error)
+            //     }
+            // }
+        };
+    },
+    // components: { ModalWrapper }
 };
 </script>
 
@@ -64,6 +80,11 @@ export default {
     object-position: center;
     box-shadow: 0 -0.5px 8px -0.5px #2928289a,
         0 -1px 8px -2px #29282894;
+}
+
+.hover:hover {
+    transform: scale(1.02);
+    transition: 0.35s;
 }
 
 .overlay-card {
@@ -89,10 +110,16 @@ export default {
 
 }
 
+.profile-pic {
+    // height: max-content;
+    max-height: 50px;
+    max-width: 50px;
+}
 
 @media screen and (max-width: 768px) {
     .profile-pic {
         height: max-content;
+        max-height: 50px;
     }
 }
 </style>

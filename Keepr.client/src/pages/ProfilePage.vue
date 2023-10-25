@@ -12,6 +12,24 @@
                 <p>#vault||#keep</p>
             </div>
 
+            <hr class="mt-3">
+            <section class="row">
+                <p>My Vaults</p>
+                <div v-for="vault in vaults" :key="vault.id" class="col-md-3 col-6 g-3">
+                    {{ vaults.name }}
+                    <VaultCard :vault="vault" />
+                </div>
+            </section>
+            <section class="row">
+                <p>My Keeps</p>
+                <section class="my-2 masonry-layout">
+
+                    <div v-for="keep in keeps" :key="keep.id" class="">
+                        {{ keeps.name }}
+                        <KeepCard :keep="keep" />
+                    </div>
+                </section>
+            </section>
         </section>
     </section>
 </template>
@@ -24,8 +42,13 @@ import { useRoute } from 'vue-router';
 import { logger } from '../utils/Logger.js';
 import { profilesService } from '../services/ProfilesService.js';
 import Pop from '../utils/Pop.js';
-import { Keep } from '../models/Keep.js';
+import VaultCard from '../components/VaultCard.vue';
+import { keepsService } from '../services/KeepsService.js';
+import { vaultsService } from '../services/VaultsService.js';
+
 import { Profile } from '../models/Account.js';
+import KeepModal from '../components/KeepModal.vue';
+import KeepCard from '../components/KeepCard.vue';
 
 
 export default {
@@ -35,7 +58,9 @@ export default {
         const route = useRoute()
 
         watchEffect(() => {
-            getProfileById()
+            getProfileById();
+            getProfileKeeps();
+            getProfileVaults();
         })
 
         async function getProfileById() {
@@ -49,11 +74,42 @@ export default {
 
             }
         }
+        async function getProfileKeeps() {
+            try {
+                // debugger
+                // error was hit in profile model, based on keeps(and vault) query specificity
+                const profileId = route.params.profileId
+                await keepsService.getProfileKeeps(profileId);
+                logger.log("Profile page Keeps GET");
+            }
+            catch (error) {
+                Pop.error(error);
+            }
+        }
+        async function getProfileVaults() {
+            try {
+                // debugger
+                // error was hit in profile model, based on keeps(and vault) query specificity
+                const profileId = route.params.profileId
+                await vaultsService.getProfileVaults(profileId);
+                logger.log("Profile page Vaults GET");
+            }
+            catch (error) {
+                Pop.error(error);
+            }
+        }
+
+        // NOTE RETURN
         return {
-            profile: computed(() => AppState.activeProfile)
+            profile: computed(() => AppState.activeProfile),
+            vaults: computed(() => AppState.profileVaults),
+            // keeps: computed(() => AppState.keeps.find(owner => owner.creatorId == AppState.profile.id))
+            keeps: computed(() => AppState.profileKeeps)
+
 
         }
-    }
+    },
+    components: { VaultCard, KeepCard }
 };
 </script>
 
@@ -108,5 +164,33 @@ img.profile-cover {
     box-shadow: 0 -0.5px 8px -0.5px #292828,
         0 -1px 8px -2px #292828;
 
+}
+
+.masonry-layout {
+    $gap: 1.25em;
+    columns: 4;
+    column-gap: $gap;
+
+    div {
+        // max-height: 30dvh;
+        // min-height: 15dvh;
+        width: 100%;
+        margin-bottom: $gap;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .masonry-layout {
+        $gap: 1.25em;
+        columns: 2;
+        column-gap: $gap;
+
+        div {
+            // max-height: 30dvh;
+            // min-height: 15dvh;
+            width: 100%;
+            margin-bottom: $gap;
+        }
+    }
 }
 </style>

@@ -1,49 +1,61 @@
 <template>
     <div class="modal fade" id="keep-modal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog"
         aria-labelledby="modalTitleId" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl" role="document">
+        <!-- modal SIZE in listed in the below classes -->
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalTitleId">Modal title</h5>
+                    <h5 class="modal-title" id="modalTitleId"></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="container-fluid">
                         <!-- NOTE the whole section has a v-if meaning it will only render IF there is an active movie -->
-                        <div class="component" v-if="keep.id">
+                        <!-- NOTE - need this top portion to be a ROW for desktop display to be side by side -->
+                        <div class="component row align-items-center" v-if="keep.id">
 
                             <!-- LEFT to mobile TOP -->
-                            <section class="col-md-6 col-12">
-                                <img :src="keep.img" alt="">
-                            </section>
+
+
+                            <img :src="keep.img" alt="" class="col-md-6 col-12 mx-0 my-0">
+
 
                             <!-- RIGHT to mobile BOTTOM -->
-                            <section class="col-md-6 col-12">
+                            <section class="col-md-6 col-12 mx-0 px-0">
                                 <!-- viewcount, keep count centered -->
-                                <section class="row justify-content-center">
-                                    {{ keep.views.length }} || {{ keep.kept.length }}
+                                <section class="row justify-content-around mx-0 px-0">
+                                    <div class="col-6 text-center">
+                                        {{ keep.views }}<span class="px-2 mdi mdi-eye-outline"></span>
+                                        <span class="">||
+                                        </span>
+                                        {{ keep.kept }}<span class="px-2 mdi mdi-alpha-k-circle-outline"></span>
+                                    </div>
                                 </section>
                                 <!-- title, description, centered -->
-                                <section class="text-center">
-                                    <div>{{ keep.name }}</div>
+                                <section class="row justify-content-center mx-0 px-0 my-md-5">
+                                    <div class="fs-1">{{ keep.name }}</div>
                                     <p>{{ keep.description }}</p>
                                 </section>
                                 <!-- vault category - account list - vis only to logged in, save/remove if logged in, profile of creator -->
                                 <!-- all centred -->
-                                <section>
+                                <section class="row align-items-center justify-content-around mt-md-5 mx-0 px-0">
                                     <!-- dropdown, v-if logged in & kept  -->
-                                    <span>
-
-                                    </span>
+                                    <div v-if="account.id != null" class="col-3">
+                                        Vault category
+                                    </div>
                                     <!-- shows if logged in -->
                                     <!-- save/remove - which will trigger above to show -->
-                                    <span></span>
+                                    <div v-if="account.id != null" class="col-3">
+                                        Save/Remove button
+                                    </div>
                                     <!-- shows always -->
                                     <!-- creator pic -->
-                                    <span>
+                                    <div class="text-end col-6 dip">
                                         <img class="profile-pic rounded-circle" :src="keep.creator.picture"
-                                            :title="keep.creator.name" alt="Keep Creator">
-                                    </span>
+                                            :title="keep.creator.name" data-toggle="name" data-placement="bottom"
+                                            alt="Keep Creator"> {{ keep.creator.name.slice(0,
+                                                keep.creator.name.indexOf('@')) }}
+                                    </div>
                                 </section>
                             </section>
 
@@ -67,7 +79,7 @@ export default {
     setup() {
         return {
             keep: computed(() => AppState.activeKeep),
-            profile: computed(() => AppState.profile),
+            // profile: computed(() => AppState.profile),
             account: computed(() => AppState.account)
         }
     }
@@ -75,4 +87,19 @@ export default {
 </script>
 
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.profile-pic {
+    max-height: 50px;
+}
+
+.profile-pic:hover {
+    max-height: 55px;
+    transition: 0.35s;
+}
+
+// .dip {
+//     position: absolute;
+//     right: 2%;
+//     bottom: 3%;
+// }
+</style>

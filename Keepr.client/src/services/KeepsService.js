@@ -9,7 +9,23 @@ async getKeeps(){
     logger.log(res,"Kservice GET")
     AppState.keeps = res.data.map(k => new Keep(k))
 }
+async getKeepById(keepId){
+const res = await api.get(`api/keeps/${keepId}`)
+logger.log(res.data, "keep by Id")
+const keep = new Keep(res.data)
+AppState.activeKeep = keep
+}
 
+async getCreatorKeeps(profileId){
+    const res = await api.get(`api/profiles/${profileId}/keeps`)
+    logger.log(res.data,"Profile keeps GET")
+    AppState.myKeeps = res.data.map(k=>new Keep(k))
+}
+async getProfileKeeps(profileId){
+    const res = await api.get(`api/profiles/${profileId}/keeps`)
+    logger.log(res.data,"Profile keeps GET")
+    AppState.profileKeeps = res.data.map(k=>new Keep(k))
+}
 // async createKeepModal(keepId){
 //     const res = await api.get(`api/keeps/${keepId}`)
 //     // res.data.id = AppState.keeps.find(keep=>keep.id==keepId)

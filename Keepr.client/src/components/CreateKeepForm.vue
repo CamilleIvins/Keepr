@@ -28,12 +28,12 @@
 
             </div>
             <section class="row justify-content-end">
-                <div class="form-check col-6">
+                <!-- <div class="form-check col-6">
                     <input class="form-check-input" type="checkbox" value="" id="vault-privacy">
                     <label class="form-check-label" for="flexCheckDefault">
                         Make this vault private?
                     </label>
-                </div>
+                </div> -->
 
                 <div class="col-6 text-end">
                     <button class="btn text-dark">SUBMIT</button>

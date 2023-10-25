@@ -114,7 +114,9 @@ public class KeepsRepository : IRepository<Keep, int>
         ;";
         List<Keep> pKeeps = _db.Query<Keep, Profile, Keep>(sql, (keep, profile) =>
         {
-            keep.CreatorId = profile.Id;
+            keep.Creator = profile;
+            // ⬇️ this is the line that will cause seizure-speed errors
+            // keep.CreatorId = profile.Id;
             return keep;
         }, new { profileId }).ToList();
         return pKeeps;

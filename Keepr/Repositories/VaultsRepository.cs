@@ -126,7 +126,8 @@ public class VaultsRepository : IRepository<Vault, int>
         ;";
         List<Vault> pVaults = _db.Query<Vault, Profile, Vault>(sql, (vault, profile) =>
         {
-            vault.CreatorId = profile.Id;
+            vault.Creator = profile;
+            // vault.CreatorId = profile.Id;
             return vault;
         }, new { profileId }).ToList();
         return pVaults;
