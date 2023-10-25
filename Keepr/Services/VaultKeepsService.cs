@@ -17,9 +17,21 @@ public class VaultKeepsService
 
     internal VaultKeep Create(VaultKeep vaultKeepsData, Account userInfo)
     {
+        if (userInfo == null) throw new Exception("Unauthorized");
         vaultKeepsData.CreatorId = userInfo.Id;
         VaultKeep newVK = _repo.Create(vaultKeepsData);
         return newVK;
+
+        // if (userInfo.Id == null)
+        // {
+        //     throw new Exception("Unauthorized");
+        // }
+        // else
+        // {
+        //     vaultKeepsData.CreatorId = userInfo.Id;
+        //     VaultKeep newVK = _repo.Create(vaultKeepsData);
+        //     return newVK;
+        // }
     }
 
     internal VaultKeep GetVKById(int vaultKeepId)

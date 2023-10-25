@@ -54,4 +54,11 @@ public class KeepsService
         return keep;
     }
 
+    // PROFILE access
+    internal List<Keep> GetProfileKeeps(string profileId)
+    {
+        List<Keep> pKeeps = _repo.GetProfileKeeps(profileId);
+        return pKeeps;
+        ;
+    }
 }

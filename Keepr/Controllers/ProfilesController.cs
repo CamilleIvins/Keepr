@@ -37,8 +37,41 @@ namespace Keepr.Controllers
                 return BadRequest(e.Message);
             }
         }
-
-
         // match Postman endpoint EXACTLY profileId, NOT id
+
+        [HttpGet("{profileId}/keeps")]
+        public ActionResult<List<Keep>> GetProfileKeeps(string profileId)
+        {
+            try
+            {
+                // Profile profile = _profilesService.GetById(profileId);
+
+                List<Keep> pKeeps = _keepsService.GetProfileKeeps(profileId);
+                return Ok(pKeeps);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpGet("{profileId}/vaults")]
+        public async Task<ActionResult<List<Vault>>> GetProfileVaults(string profileId)
+        {
+            try
+            {
+                Profile userInfo = await _auth.GetUserInfoAsync<Profile>(HttpContext);
+
+                List<Vault> pVaults = _vaultsService.GetProfileVaults(profileId, userInfo?.Id);
+                return Ok(pVaults);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+
+
     }
 }

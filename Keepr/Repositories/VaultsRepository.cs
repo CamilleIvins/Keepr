@@ -113,4 +113,22 @@ public class VaultsRepository : IRepository<Vault, int>
         }, new { userId }).ToList();
         return myVaults;
     }
+
+    internal List<Vault> GetProfileVaults(string profileId)
+    {
+        string sql = @"
+        SELECT
+        vaults.*,
+        profile.*
+        FROM vaults
+        Join accounts profile ON profile.id = vaults.creatorId
+        WHERE vaults.creatorId = @profileId
+        ;";
+        List<Vault> pVaults = _db.Query<Vault, Profile, Vault>(sql, (vault, profile) =>
+        {
+            vault.CreatorId = profile.Id;
+            return vault;
+        }, new { profileId }).ToList();
+        return pVaults;
+    }
 }

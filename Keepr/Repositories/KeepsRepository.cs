@@ -101,5 +101,25 @@ public class KeepsRepository : IRepository<Keep, int>
     }
     // @id matches the parameter, so NOT @keepId
 
+    // PROFILE keeps
+    internal List<Keep> GetProfileKeeps(string profileId)
+    {
+        string sql = @"
+        SELECT
+        keeps.*,
+        profile.*
+        FROM keeps
+        Join accounts profile ON profile.id = keeps.creatorId
+        WHERE keeps.creatorId = @profileId
+        ;";
+        List<Keep> pKeeps = _db.Query<Keep, Profile, Keep>(sql, (keep, profile) =>
+        {
+            keep.CreatorId = profile.Id;
+            return keep;
+        }, new { profileId }).ToList();
+        return pKeeps;
+    }
+    // WHERE keeps.creatorId = @profileId????
+
 
 }

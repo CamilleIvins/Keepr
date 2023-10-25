@@ -8,9 +8,11 @@ namespace Keepr.Services;
 public class VaultsService
 {
     private readonly VaultsRepository _repo;
-    public VaultsService(VaultsRepository repo)
+    private readonly ProfilesService _profilesService;
+    public VaultsService(VaultsRepository repo, ProfilesService profilesService)
     {
         _repo = repo;
+        _profilesService = profilesService;
     }
 
     internal Vault Create(Vault vaultData)
@@ -58,5 +60,20 @@ public class VaultsService
     {
         List<Vault> myVaults = _repo.GetByCreator(userId);
         return myVaults;
+    }
+
+    internal List<Vault> GetProfileVaults(string profileId, string userId)
+    {
+        _profilesService.GetById(profileId);
+        List<Vault> pVaults = _repo.GetProfileVaults(profileId);
+        // = this.GetVaultsByCreator(userId);
+        if (profileId == userId)
+        {
+            return pVaults;
+        }
+        // not allowing to use keys in pVaults
+        // _repo.GetProfileVaults(profileId, userId);
+        List<Vault> publicVaults = pVaults.FindAll(pV => pV.IsPrivate == false);        // if(pVaults.IsPrivate == true && pVaults.CreatorId != userId)
+        return pVaults;
     }
 }

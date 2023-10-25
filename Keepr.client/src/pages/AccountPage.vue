@@ -2,17 +2,22 @@
   <section class="container-fluid" v-if="account.id">
     <section class="row">
       <div class="about text-center px-0">
-        <img :src="account.coverImg" alt="" class="account-cover">
-        <div class="welcome font-dancing">Welcome {{ account.name.slice(0, account.name.indexOf('@')) }}</div>
+        <img :src="account.coverImg" alt="" class="account-cover position-absolute">
+        <div class="welcome font-dancing">Welcome, {{ account.name.slice(0, account.name.indexOf('@')) }}</div>
         <!-- <div class="text-center"> -->
-        <img class="rounded-circle profile-pic" :src="account.picture" alt="" />
+        <img class="rounded-circle profile-pic mb-5" :src="account.picture" alt="" />
         <!-- </div> -->
-        <p>{{ account.email }}</p>
       </div>
-      <p>My Vaults</p>
-      <p>{{ vault.name }}</p>
-      <hr>
+      <div class="mt-5 text-center">
+        <p class="mt-5">{{ account.email }}</p>
+      </div>
 
+
+      <hr class="mt-3">
+      <section class="row">
+        <p>My Vaults</p>
+        <div class="col-md-3 col-6">{{ vault.name }}</div>
+      </section>
 
     </section>
   </section>
@@ -67,7 +72,7 @@ export default {
 .welcome {
   position: relative;
   text-align: center;
-  bottom: 35%;
+  bottom: -25%;
   filter: drop-shadow(3px 8px 7px #292828);
   color: aliceblue;
   font-size: xxx-large;
@@ -81,6 +86,7 @@ img.account-cover {
   width: 100%;
   object-fit: cover;
   object-position: center;
+  right: 0;
   /* elevation-2 settings */
   box-shadow: 0 3px 3px -1px rgba(205, 205, 205, 0.2),
     0 5px 6px 0 rgba(205, 205, 205, 0.14),
@@ -93,6 +99,7 @@ img.account-cover {
     width: 100dvw;
     object-fit: cover;
     object-position: center;
+    right: 0;
     /* elevation-2 settings */
     box-shadow: 0 3px 3px -1px rgba(205, 205, 205, 0.2),
       0 5px 6px 0 rgba(205, 205, 205, 0.14),
@@ -103,7 +110,7 @@ img.account-cover {
 .profile-pic {
   height: 20dvh;
   position: relative;
-  bottom: 15vh;
+  bottom: -18vh;
   filter: drop-shadow(0 0 8px #292828);
   /* box-shadow: 0 3px 3px -1px rgba(205, 205, 205, 0.2),
     0 5px 6px 0 rgba(205, 205, 205, 0.14),

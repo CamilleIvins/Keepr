@@ -2,13 +2,13 @@
     <section class="container-fluid" v-if="profile.id">
         <section class="row">
             <div class="about text-center">
-                <img :src="profile.coverImg" alt="" class="elevation-4 profile-cover">
+                <img :src="profile.coverImg" alt="" class="elevation-4 profile-cover position-absolute">
                 <div class="welcome font-dancing">Welcome,</div>
                 <p class="welcome my-0 fs-3">my name is</p>
                 <p class="welcome my-0 font-dancing">{{ profile.name.slice(0, profile.name.indexOf('@')) }}</p>
-            </div>
-            <div class="text-center">
                 <img class="rounded-circle profile-pic" :src="profile.picture" alt="" />
+            </div>
+            <div class="text-center mt-5">
                 <p>#vault||#keep</p>
             </div>
 
@@ -62,7 +62,7 @@ export default {
 .welcome {
     position: relative;
     text-align: center;
-    bottom: 50%;
+    bottom: -5%;
     filter: drop-shadow(3px 8px 7px #292828);
     color: aliceblue;
     font-size: xxx-large;
@@ -76,6 +76,7 @@ img.profile-cover {
     width: 100%;
     object-fit: cover;
     object-position: center;
+    right: 0;
     /* elevation-2 settings */
     box-shadow: 0 3px 3px -1px rgba(205, 205, 205, 0.2),
         0 5px 6px 0 rgba(205, 205, 205, 0.14),
@@ -88,6 +89,7 @@ img.profile-cover {
         width: 100dvw;
         object-fit: cover;
         object-position: center;
+        right: 0;
         /* elevation-2 settings */
         box-shadow: 0 3px 3px -1px rgba(205, 205, 205, 0.2),
             0 5px 6px 0 rgba(205, 205, 205, 0.14),
@@ -98,7 +100,7 @@ img.profile-cover {
 .profile-pic {
     height: 20dvh;
     position: relative;
-    bottom: 15vh;
+    bottom: -4vh;
     filter: drop-shadow(0 0 1px #ffffff);
     /* box-shadow: 0 3px 3px -1px rgba(205, 205, 205, 0.2),
     0 5px 6px 0 rgba(205, 205, 205, 0.14),
