@@ -21,7 +21,8 @@
             About
           </router-link> -->
           <!-- <ModalWrapper id="id" v-if="user.isAuthenticated">s -->
-          <button class="btn selectable theme-btn theme-font" data-bs-toggle="modal" data-bs-target="#create-keep">
+          <button v-if="user.isAuthenticated" class="btn selectable theme-btn theme-font" data-bs-toggle="modal"
+            data-bs-target="#create-keep">
             Create a Keep
             <CreateKeepForm />
           </button>

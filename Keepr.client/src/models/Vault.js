@@ -7,7 +7,7 @@ export class Vault {
         this.name = data.name
         this.description = data.description
         this.img = data.img
-        this.isPrivate = data.isPrivate
+        this.isPrivate = data.isPrivate || false;
         this.creatorId = data.creatorId
         this.creator = new Profile(data.creator)
     }

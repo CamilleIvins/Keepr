@@ -97,7 +97,7 @@ export default {
       myKeeps: computed(() => AppState.myKeeps)
     }
   },
-  components: { VaultCard, KeepCard, CreateVaultForm }
+  components: { VaultCard, KeepCard }
 }
 </script>
 

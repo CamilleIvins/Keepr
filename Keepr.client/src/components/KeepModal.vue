@@ -5,7 +5,7 @@
         <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalTitleId"></h5>
+                    <h5 class="modal-title" id="newKeep"></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -40,9 +40,9 @@
                                 <!-- all centred -->
                                 <section class="row align-items-center justify-content-around mt-md-5 mx-0 px-0">
                                     <!-- dropdown, v-if logged in & kept  -->
-                                    <div v-if="account.id != null" class="col-3">
-                                        <!-- OR update the keep -->
-                                        <form @submit.prevent="updateVK">
+                                    <div v-if="account.id != null" class="col-3 px-0 d-flex">
+                                        <form @submit.prevent="createVK">
+                                            <!-- OR update the keep -->
                                             <label class="mini">Choose a Vault</label>
                                             <select v-model="editable.vaultId" name="myVaults" id="myVaults"
                                                 class="form-control">
@@ -50,30 +50,30 @@
                                                 <option v-for="vault in myVaults" :key="'select' + vault.id"
                                                     :value="vault.id">{{ vault.name }}</option>
                                             </select>
+                                            <!-- shows if logged in -->
+                                            <!-- save/remove - which will trigger above to show -->
+                                            <div v-if="account.id != null" class="d-flex col-3 mt-1 text-end">
+
+                                                <!-- <div v-if="account.id==keep.creatorId && vaultKeep.keepId == null"> -->
+                                                <div v-if="vaultKeep.keepId == null">
+                                                    <!-- save -->
+                                                    <button @click="createVK" class="save-keep btn">
+                                                        Save
+                                                    </button>
+                                                </div>
+
+                                                <div v-else>
+                                                    <!-- delete -->
+                                                    <button @click="removeVK" class="btn remove-keep">
+                                                        Remove
+                                                        <!--data-bs-toggle="collapse" data-bs-target="#VaultList">
+                                                    <div class="collapse" id="VaultList"> -->
+
+                                                    </button>
+
+                                                </div>
+                                            </div>
                                         </form>
-                                    </div>
-                                    <!-- shows if logged in -->
-                                    <!-- save/remove - which will trigger above to show -->
-                                    <div v-if="account.id != null" class="col-3">
-
-                                        <!-- <div v-if="account.id==keep.creatorId && vaultKeep.keepId == null"> -->
-                                        <div v-if="vaultKeep.keepId == null">
-                                            <!-- save -->
-                                            <button @click="createVK" class="save-keep btn">
-                                                Save
-                                            </button>
-                                        </div>
-
-                                        <div v-else>
-                                            <!-- delete -->
-                                            <button @click="removeVK" class="btn remove-keep">
-                                                Remove
-                                                <!--data-bs-toggle="collapse" data-bs-target="#VaultList">
-                                                <div class="collapse" id="VaultList"> -->
-
-                                            </button>
-
-                                        </div>
                                     </div>
                                     <!-- shows always -->
                                     <!-- creator pic -->
@@ -101,14 +101,25 @@ import { computed, reactive, onMounted, ref } from 'vue';
 import Pop from '../utils/Pop.js';
 import { keepsService } from '../services/KeepsService.js';
 import { vaultKeepsService } from '../services/VaultKeepsService.js';
+import { accountService } from '../services/AccountService.js';
 
 
 export default {
     // props: { keep: { type: Keep || Object, required: true }, },
 
     setup() {
+        onMounted(() => {
+            getMyVaults()
+        })
 
         const editable = ref({})
+        async function getMyVaults() {
+            try {
+                await accountService.getMyVaults()
+            } catch (error) {
+                Pop.error(error)
+            }
+        }
 
         return {
             // TODO - VK service

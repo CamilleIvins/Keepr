@@ -14,8 +14,6 @@
     Place this on the navbar, Vaults will be on account
 </button> -->
                         <!-- TODO - HIDE in function 'getOCreateInstance' part on submit -->
-
-
                         <form @submit.prevent="createKeep" class="row">
                             <div class="mb-1 col-6">
                                 <label class="text-dark" for="keep-name">Keep Title</label>
@@ -26,26 +24,21 @@
                             <div class="mb-1 col-12">
                                 <label class="text-dark" for="keep-cover">Cover Image</label>
                                 <input v-model="keepData.img" type="url" id="keep-cover" class="form-control" minlength="5"
-                                    maxlength="250" placeholder="Keep Cover URL">
+                                    maxlength="250" placeholder="Keep Cover URL" required>
                             </div>
                             <div class="mb-1 col-12">
                                 <img :src="keepData.img" alt="" class="img-fluid preview-img" required>
                             </div>
                             <!-- check character cap in SQL/Dapper ✅-->
                             <div class="mb-1 col-12">
-                                <label for="keep-description" class="text-dark">keep Description</label>
+                                <label for="keep-description" class="text-dark">Keep Description</label>
                                 <textarea v-model="keepData.description" type="number" id="keep-description"
                                     class="form-control" maxlength="1000" cols="30" rows="10" placeholder="Keep Description"
                                     required></textarea>
 
                             </div>
                             <section class="row justify-content-end">
-                                <!-- <div class="form-check col-6">
-                    <input class="form-check-input" type="checkbox" value="" id="vault-privacy">
-                    <label class="form-check-label" for="flexCheckDefault">
-                        Make this vault private?
-                    </label>
-                </div> -->
+
 
                                 <div class="col-6 text-end">
                                     <button class="btn text-dark">SUBMIT</button>
@@ -76,7 +69,7 @@ export default {
         const keepData = ref({})
         const router = useRouter()
         function resetForm() {
-            keepData.value = { category: '' }
+            keepData.value = { category: `` }
         }
         onMounted(() => {
             resetForm()
@@ -87,15 +80,15 @@ export default {
             async createKeep() {
                 // remember to try-catch these
                 try {
-                    let newKeep = keepData.value
                     logger.log("create button pushed")
+                    let newKeep = keepData.value
                     await keepsService.createKeep(newKeep)
                     Pop.toast('Keep Created', `This one's a Keepr`)
                     resetForm()
                     // ID is found in NAVBAR
-                    // Modal.getOrCreateInstance('#create-keep').hide()
+                    Modal.getOrCreateInstance('#create-keep').hide()
                     // NOTE - This might not need a push...
-                    // router.push({ name: 'Home', params: { keepId: newKeep.id } }) //<--did not like params, still created
+                    router.push({ name: 'Home' }) //<--did not like params, still created
 
                 } catch (error) {
                     Pop.error(error)

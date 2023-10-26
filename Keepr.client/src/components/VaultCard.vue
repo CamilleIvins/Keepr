@@ -3,14 +3,15 @@
         <!-- <div class="component col-md-3 col-6"> -->
         <div v-if="vault.isPrivate == false" class="position-relative hover">
             <router-link class="col-4" :to="{ name: 'Vault Details', params: { vaultId: vault.id } }">
-                <img :src="vault.img" class="vaultCover">
+                <img :src="vault.img" class="vaultCover" :alt="vault.name">
                 <div class="overlay-card text-light p-1">
                     <section class="row">
                         <p class="d-flex align-items-center col-8 ps-3 my-0 fw-bold">{{ vault.name }}</p>
                         <router-link class="col-4 d-flex justify-content-end align-items-end align-items-md-center"
                             :to="{ name: 'Profile', params: { profileId: vault.creatorId } }">
                             <!-- TODO toggle this so that it is unlocked or locked on the VAULT DETAILS page -->
-                            <img class="rounded-circle col-12 my-0 p-md-1 profile-pic" :src="vault.creator.picture">
+                            <img class="rounded-circle col-12 my-0 p-md-1 profile-pic" :src="vault.creator.picture"
+                                :alt="vault.creator.name">
                         </router-link>
 
                     </section>
@@ -24,7 +25,7 @@
                 <div class="overlay-card text-light p-1">
                     <section class="row">
                         <p class="d-flex align-items-center col-8 ps-3 my-0 fw-bold">{{ vault.name }}</p>
-                        <i class="mdi mdi-lock-outline text-light">Private</i>
+                        <span><i class="text-end col-4 mdi mdi-lock-outline text-light">Private</i></span>
                         <!-- <img class="rounded-circle col-12 my-0 p-md-1 profile-pic" :src="vault.creator.picture"> -->
 
                     </section>
@@ -78,10 +79,11 @@ export default {
 
 <style lang="scss" scoped>
 .vaultCover {
-
+    // add aspect ratio because new vault's do not conform
     min-height: 15dvh;
     border-radius: 15px;
     width: 100%;
+    aspect-ratio: 5/4;
     object-fit: cover;
     object-position: center;
     box-shadow: 0 -0.5px 8px -0.5px #2928289a,

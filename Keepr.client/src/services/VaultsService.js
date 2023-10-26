@@ -5,6 +5,13 @@ import { logger } from '../utils/Logger.js';
 
 // TODO - CREATE (post, push) && DELETE (be sure to add Pop confirms on page || keeps, filter out ID OR ID index and splice (index, 1))
 class VaultsService {
+async createVault(vaultData){
+    const res = await api.post(`api/vaults`, vaultData)
+    const newVault = new Vault(res.data)
+    AppState.vaults.push(newVault)
+    return newVault
+}
+
     // ACCOUNT GET
 async getVaults(){
     const res = await api.get(`account/vaults`)

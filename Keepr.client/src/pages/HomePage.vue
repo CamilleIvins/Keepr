@@ -20,7 +20,7 @@ import { keepsService } from '../services/KeepsService.js';
 import { logger } from '../utils/Logger.js';
 import Pop from '../utils/Pop.js';
 import { AppState } from "../AppState.js"
-import { Keep } from '../models/Keep.js';
+// import { Keep } from '../models/Keep.js';
 import KeepCard from '../components/KeepCard.vue';
 // import ModalWrapper from './ModalWrapper.vue';
 

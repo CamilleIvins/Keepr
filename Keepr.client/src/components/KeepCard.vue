@@ -3,7 +3,7 @@
         <!-- <div class="component col-md-3 col-6"> -->
         <div class="position-relative hover">
             <!-- <ModalWrapper id="keep-modal"> -->
-            <img :src="keep.img" class="keepCover" @click="openKeepDetails()" data-bs-toggle="modal"
+            <img :src="keep.img" class="keepCover" :alt="keep.name" @click="openKeepDetails()" data-bs-toggle="modal"
                 data-bs-target="#keep-modal">
             <!-- </ModalWrapper> -->
             <div class="overlay-card text-light p-1">
@@ -12,7 +12,8 @@
                     <router-link class="col-4 d-flex justify-content-end align-items-end align-items-md-center"
                         :to="{ name: 'Profile', params: { profileId: keep.creatorId } }">
 
-                        <img class="rounded-circle col-12 my-0 p-md-1 profile-pic" :src="keep.creator.picture">
+                        <img class="rounded-circle col-12 my-0 p-md-1 profile-pic" :src="keep.creator.picture"
+                            :alt="keep.creator.name">
                     </router-link>
                 </section>
 

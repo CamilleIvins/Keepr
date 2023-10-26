@@ -5,7 +5,7 @@
         <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalTitleId"> Add a Keep!</h5>
+                    <h5 class="modal-title" id="modalTitleId"> Add a Vault!</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -15,7 +15,7 @@
 </button> -->
                         <!-- TODO - HIDE in function 'getOCreateInstance' part on submit -->
                         <form @submit.prevent="createVault" class="row">
-                            Add a Vault!
+
                             <div class="mb-1 col-6">
                                 <label class="text-dark" for="vault-name">Vault Title</label>
                                 <input v-model="vaultData.name" id="vault-name" class="form-control" type="text"
@@ -25,20 +25,23 @@
                             <div class="mb-1 col-12">
                                 <label class="text-dark" for="vault-cover">Cover Image</label>
                                 <input v-model="vaultData.img" type="url" id="vault-cover" class="form-control"
-                                    minlength="5" maxlength="250" placeholder="Vault Cover URL">
+                                    minlength="5" maxlength="250" placeholder="Vault Cover URL" required>
                             </div>
                             <div class="mb-1 col-12">
                                 <img :src="vaultData.img" alt="" class="img-fluid preview-img">
                             </div>
                             <!-- place ⬇️ on vault details page -->
-                            <!-- <div class="mb-1 col-12">
-            <label for="vault-description" class="text-dark">vault Description</label>
-            <textarea v-model="vaultData.description" type="number" id="vault-description" class="form-control" maxlength="1000" cols="30" rows="10" placeholder="Vault Description"></textarea>
+                            <div class="mb-1 col-12">
+                                <label for="vault-description" class="text-dark">Vault Description</label>
+                                <textarea v-model="vaultData.description" type="number" id="vault-description"
+                                    class="form-control" maxlength="1000" cols="30" rows="10"
+                                    placeholder="Vault Description" required></textarea>
 
-        </div> -->
+                            </div>
                             <section class="row justify-content-end">
                                 <div class="form-check col-6">
-                                    <input class="form-check-input" type="checkbox" value="" id="vault-privacy">
+                                    <input v-model="vaultData.isPrivate" class="form-check-input" type="checkbox" value=""
+                                        id="vault-privacy">
                                     <label class="form-check-label" for="flexCheckDefault">
                                         Make this vault private?
                                     </label>
@@ -72,22 +75,23 @@ export default {
     setup() {
         const vaultData = ref({})
         const router = useRouter()
-        function resetForm() {
-            vaultData.value = { category: '' }
-        }
+        // function resetForm() {
+        //     vaultData.value = ''
+        // }
         onMounted(() => {
-            resetForm()
+            // resetForm()
         })
 
         return {
             vaultData,
             async createVault() {
                 // remember to try-catch these
+                debugger
                 try {
                     logger.log("create button pushed")
                     let newVault = await vaultsService.createVault(vaultData.value)
                     Pop.toast('vault created', 'success')
-                    resetForm()
+                    // resetForm()
                     // ID is found in NAVBAR
                     Modal.getOrCreateInstance('#create-vault').hide()
                     router.push({ name: 'Vault Details', params: { vaultId: newVault.id } }) //<--did not like params, still created
