@@ -2,8 +2,13 @@
   <nav class="navbar navbar-expand-lg navbar-dark px-3">
     <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
       <div class="d-flex flex-column align-items-center">
-        <img alt="logo" src="../assets/img/cw-logo.png" height="45" />
+        <!-- <img alt="logo" src="../assets/img/cw-logo.png" height="45" /> -->
+        <img class="logo" alt="logo"
+          src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExOXpwcWxoYTJoNXd1ank4MWJzYjk2bnIyeTJrOHRzNG15bW11ZWZyMyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/1l9wPn8viAMWCVaCTw/giphy.gif"
+          height="55" />
+        <!-- <div src="https://giphy.com/embed/1l9wPn8viAMWCVaCTw" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/atletica-atleticafeausp-fea-usp-1l9wPn8viAMWCVaCTw">via GIPHY</a></p> -->
       </div>
+      <span class="new-title text-end d-flex align-items-center"> Keepr-oo</span>
     </router-link>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
       aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -12,7 +17,7 @@
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav me-auto">
         <li>
-          <router-link :to="{ name: 'About' }" class="btn theme-btn lighten-30 selectable text-uppercase">
+          <router-link :to="{ name: 'About' }" class="btn theme-btn lighten-30 selectable theme-font">
             About
           </router-link>
         </li>
@@ -38,6 +43,24 @@ a:hover {
   text-decoration: none;
 }
 
+/* FIXME - change font family */
+.new-title {
+  color: var(--themeCharcoal);
+  font-family: 'Courgette', cursive;
+  font-size: 5dvh;
+}
+
+.theme-font {
+  font-family: 'Courgette', cursive;
+  font-size: 2.5dvh;
+  ;
+}
+
+.logo {
+
+  transform: rotateY(180deg);
+}
+
 .nav-link {
   text-transform: uppercase;
 }
@@ -58,9 +81,13 @@ nav {
 
 }
 
-@media screen and (min-width: 768px) {
+.navbar-toggler-icon {
+  background-color: var(--themeBlush);
+}
+
+/* @media screen and (min-width: 768px) {
   nav {
     height: 64px;
   }
-}
+} */
 </style>

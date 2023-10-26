@@ -1,19 +1,20 @@
 <template>
   <span class="navbar-text">
     <!-- got rid of text-success color for navbar -->
-    <button class="btn selectable theme-btn lighten-30 text-uppercase my-2 my-lg-0" @click="login"
+    <button class="btn selectable theme-btn lighten-30  my-2 my-lg-0 theme-font" @click="login"
       v-if="!user.isAuthenticated">
       Login
     </button>
     <div v-else>
       <div class="dropdown my-2 my-lg-0">
-        <div type="button" class="bg-dark border-0 selectable no-select" data-bs-toggle="dropdown" aria-expanded="false">
-          <div v-if="account.picture || user.picture">
+        <div type="button" class=" border-0 selectable no-select" data-bs-toggle="dropdown" aria-expanded="false">
+          <div v-if="account.picture || user.picture" class="account-name theme-font">
             <img :src="account.picture || user.picture" alt="account photo" height="40" class="rounded" />
+            {{ account.name.slice(0, account.name.indexOf('@')) }}
           </div>
         </div>
         <div class="dropdown-menu dropdown-menu-lg-end dropdown-menu-start p-0" aria-labelledby="authDropdown">
-          <div class="list-group">
+          <div class="list-group theme-font">
             <router-link :to="{ name: 'Account' }">
               <div class="list-group-item dropdown-item list-group-item-action">
                 Manage Account
@@ -54,5 +55,15 @@ export default {
 .theme-btn:hover {
   background-color: var(--themeMauve);
   color: var(--themeFadedAmethyst);
+}
+
+.account-name {
+  color: var(--themeFadedAmethyst);
+}
+
+.theme-font {
+  font-family: 'Courgette', cursive;
+  font-size: 2.5dvh;
+
 }
 </style>

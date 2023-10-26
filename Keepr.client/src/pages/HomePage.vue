@@ -1,5 +1,5 @@
 <template>
-  <section class="d-flex flex-column col-10 justify-content-center container-fluid">
+  <section class="d-md-flex flex-md-column col-md-10 justify-content-center container-fluid">
     <section class="my-2 masonry-layout">
       <!-- <section class="row my-2 justify-content-around"> -->
       <!-- <div v-for="keep in keeps" :key="keep.id" class=""> -->

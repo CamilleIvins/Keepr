@@ -31,7 +31,7 @@ public class VaultsService
     {
         Vault foundVault = _repo.GetById(vaultId);
         if (foundVault == null) throw new Exception($"Unable to find Vault with ID:{vaultId}");
-        if (foundVault.IsPrivate == true && foundVault.CreatorId != userId) throw new Exception($"Unable to find Vault with ID:{foundVault.Name}");
+        if (foundVault.IsPrivate == true && foundVault.CreatorId != userId) throw new Exception($"Unable to find Vault with name:{foundVault.Name}");
         return foundVault;
     }
 
@@ -67,13 +67,17 @@ public class VaultsService
         _profilesService.GetById(profileId);
         List<Vault> pVaults = _repo.GetProfileVaults(profileId);
         // = this.GetVaultsByCreator(userId);
-        if (profileId == userId)
-        {
-            return pVaults;
-        }
+        // if (profileId == userId)
+        // {
+        //     return pVaults;
+        // }
         // not allowing to use keys in pVaults
         // _repo.GetProfileVaults(profileId, userId);
-        List<Vault> publicVaults = pVaults.FindAll(pV => pV.IsPrivate == false);        // if(pVaults.IsPrivate == true && pVaults.CreatorId != userId)
+        if (profileId != userId)
+        {
+            List<Vault> publicVaults = pVaults.FindAll(pV => pV.IsPrivate == false);        // if(pVaults.IsPrivate == true && pVaults.CreatorId != userId)
+            return publicVaults;
+        }
         return pVaults;
     }
 }
