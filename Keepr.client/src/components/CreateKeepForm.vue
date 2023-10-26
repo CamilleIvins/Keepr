@@ -3,6 +3,7 @@
         <!-- <button @click.prevent="createVault">
     Place this on the navbar, Vaults will be on account
 </button> -->
+        <!-- TODO - HIDE in function 'getOCreateInstance' part on submit -->
 
         <form @submit.prevent="createKeep" class="row">
             Add a Keep!

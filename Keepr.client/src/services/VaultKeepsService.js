@@ -3,6 +3,8 @@ import { api } from "./AxiosService.js"
 import { VaultKeep } from "../models/VaultKeep.js"
 import { logger } from '../utils/Logger.js';
 
+// TODO - CREATE && DELETE the Keeps!!!
+// NOTE Do NOT create or delete the VK itself
 class VaultKeepsService {
 
 

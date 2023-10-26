@@ -55,6 +55,7 @@ a:hover {
 nav {
   /* background-color: var(--themeWhite); */
   color: var(--theme);
+
 }
 
 @media screen and (min-width: 768px) {

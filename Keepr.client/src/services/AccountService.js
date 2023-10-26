@@ -4,6 +4,7 @@ import { Vault } from '../models/Vault.js'
 import { logger } from '../utils/Logger'
 import { api } from './AxiosService'
 
+// TODO - allow to edit account, button on page
 class AccountService {
   async getAccount() {
     try {

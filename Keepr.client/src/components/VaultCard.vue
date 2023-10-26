@@ -1,7 +1,7 @@
 <template>
     <div class="component container-fluid">
         <!-- <div class="component col-md-3 col-6"> -->
-        <div class="position-relative hover">
+        <div v-if="vault.isPrivate == false" class="position-relative hover">
             <router-link class="col-4" :to="{ name: 'Vault Details', params: { vaultId: vault.id } }">
                 <img :src="vault.img" class="vaultCover">
                 <div class="overlay-card text-light p-1">
@@ -9,9 +9,23 @@
                         <p class="d-flex align-items-center col-8 ps-3 my-0 fw-bold">{{ vault.name }}</p>
                         <router-link class="col-4 d-flex justify-content-end align-items-end align-items-md-center"
                             :to="{ name: 'Profile', params: { profileId: vault.creatorId } }">
-
+                            <!-- TODO toggle this so that it is unlocked or locked on the VAULT DETAILS page -->
                             <img class="rounded-circle col-12 my-0 p-md-1 profile-pic" :src="vault.creator.picture">
                         </router-link>
+
+                    </section>
+
+                </div>
+            </router-link>
+        </div>
+        <div v-else class="position-relative hover">
+            <router-link class="col-4" :to="{ name: 'Vault Details', params: { vaultId: vault.id } }">
+                <img :src="vault.img" class="vaultCover">
+                <div class="overlay-card text-light p-1">
+                    <section class="row">
+                        <p class="d-flex align-items-center col-8 ps-3 my-0 fw-bold">{{ vault.name }}</p>
+                        <i class="mdi mdi-lock-outline text-light">Private</i>
+                        <!-- <img class="rounded-circle col-12 my-0 p-md-1 profile-pic" :src="vault.creator.picture"> -->
 
                     </section>
 

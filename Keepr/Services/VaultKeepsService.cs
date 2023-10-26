@@ -14,11 +14,13 @@ public class VaultKeepsService
         _repo = repo;
         _vaultsService = vaultsService;
     }
-
+    // FIXME - and Postman Test!!!!!
     internal VaultKeep Create(VaultKeep vaultKeepsData, Account userInfo)
     {
-        if (userInfo == null) throw new Exception("Unauthorized");
-        vaultKeepsData.CreatorId = userInfo.Id;
+        Vault vault = _vaultsService.GetById(vaultKeepsData.VaultId, vaultKeepsData.CreatorId);
+        // if (userInfo == null) throw new Exception("Unauthorized");
+        if (vault.CreatorId != vaultKeepsData.CreatorId) throw new Exception("Unauthorized");
+        // vaultKeepsData.CreatorId = userInfo.Id;
         VaultKeep newVK = _repo.Create(vaultKeepsData);
         return newVK;
 

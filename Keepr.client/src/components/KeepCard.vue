@@ -51,7 +51,19 @@ export default {
                 catch (error) {
                     Pop.error(error);
                 }
-            }
+            },
+            // THIS WILL GO INTO MODAL
+            // async deleteKeep(keepId) {
+            //     try {
+            //         const deletedKeep = await Pop.confirm("Are you sure you want to delete this Keep?")
+            //         if (!deletedKeep) {
+            //             return
+            //         }
+            //         await keepsService.deleteKeep(keepId)
+            //     } catch (error) {
+            //         Pop.error(error)
+            //     }
+            // }
             // async keepModal() {
             //     // trycatch these
             //     try {

@@ -53,7 +53,7 @@ public class VaultsRepository : IRepository<Vault, int>
         }).ToList();
         return vaults;
     }
-
+    // FIXME ⬇️ swapped the join order, maybe this will fix Postman error???
     public Vault GetById(int vaultId)
     {
         string sql = @"
@@ -61,7 +61,7 @@ public class VaultsRepository : IRepository<Vault, int>
         vaults.*,
         acct.*
         FROM vaults
-        JOIN accounts acct ON vaults.creatorId = acct.id
+        JOIN accounts acct ON acct.id = vaults.creatorId
         WHERE vaults.id = @vaultId
         ;";
         Vault foundVault = _db.Query<Vault, Account, Vault>(sql, (vault, account) =>

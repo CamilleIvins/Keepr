@@ -17,7 +17,7 @@
                 <p>My Vaults</p>
                 <div v-for="vault in vaults" :key="vault.id" class="col-md-3 col-6 g-3">
                     {{ vaults.name }}
-                    <VaultCard :vault="vault" />
+                    <VaultCard :vault="vault" v-if="vault.isPrivate == false" />
                 </div>
             </section>
             <section class="row">

@@ -47,6 +47,29 @@
                                     <!-- save/remove - which will trigger above to show -->
                                     <div v-if="account.id != null" class="col-3">
                                         Save/Remove button
+                                        <!-- <div v-if="account.id==keep.creatorId && vaultKeep.keepId == null"> -->
+                                        <div v-if="vaultKeep.keepId == null">
+                                            <!-- save -->
+                                            <form @submit.prevent="createVK">
+                                                <select v-model="editable.vaultId" name="myVaults" id="myVaults"
+                                                    class="form-control">
+                                                    <option value="" disabled selected>Choose Vault</option>
+                                                    <option v-for="vault in myVaults" :key="'select' + vault.id"
+                                                        :value="vault.id">{{ vault.name }}</option>
+                                                </select>
+                                            </form>
+                                        </div>
+
+                                        <div v-else>
+                                            <!-- delete -->
+                                            <button @click="removeVK" class="btn remove-btn">
+
+                                                <!--data-bs-toggle="collapse" data-bs-target="#VaultList">
+                                                <div class="collapse" id="VaultList"> -->
+
+                                            </button>
+
+                                        </div>
                                     </div>
                                     <!-- shows always -->
                                     <!-- creator pic -->
@@ -70,17 +93,50 @@
 
 <script>
 import { AppState } from '../AppState';
-import { computed, reactive, onMounted } from 'vue';
-import { Keep } from '../models/Keep.js';
+import { computed, reactive, onMounted, ref } from 'vue';
+import Pop from '../utils/Pop.js';
+import { keepsService } from '../services/KeepsService.js';
+import { vaultKeepsService } from '../services/VaultKeepsService.js';
+
 
 export default {
     // props: { keep: { type: Keep || Object, required: true }, },
 
     setup() {
+
+        const editable = ref({})
+
         return {
+            // TODO - VK service
+            // FIXME - VK service
+            async createVK(keepId) {
+                try {
+                    const vkStatus = editable.value
+                    vkStatus.keepId = keepId
+                    vaultKeepsService.createVK(vkStatus)
+                } catch (error) {
+                    Pop.error(error)
+                }
+            },
+
+            async deleteKeep(keepId) {
+                try {
+                    const deletedKeep = await Pop.confirm("Are you sure you want to delete this Keep?")
+                    if (!deletedKeep) {
+                        return
+                    }
+                    await keepsService.deleteKeep(keepId)
+                } catch (error) {
+                    Pop.error(error)
+                }
+            },
+
             keep: computed(() => AppState.activeKeep),
             // profile: computed(() => AppState.profile),
-            account: computed(() => AppState.account)
+            editable,
+            account: computed(() => AppState.account),
+            myVaults: computed(() => AppState.myVaults),
+            vaultKeep: computed(() => AppState.vaultkeep),
         }
     }
 };

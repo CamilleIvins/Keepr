@@ -3,12 +3,14 @@ import { api } from "./AxiosService.js"
 import { Keep } from "../models/Keep.js"
 import { logger } from '../utils/Logger.js';
 
+// TODO - CREATE (api.post, formData, AppState.push) && getByVK (api.get, res.data.map)
 class KeepsService {
 async getKeeps(){
     const res = await api.get('api/keeps')
     logger.log(res,"Kservice GET")
     AppState.keeps = res.data.map(k => new Keep(k))
 }
+// ID sets active Keep
 async getKeepById(keepId){
 const res = await api.get(`api/keeps/${keepId}`)
 logger.log(res.data, "keep by Id")
@@ -16,11 +18,13 @@ const keep = new Keep(res.data)
 AppState.activeKeep = keep
 }
 
+// All Account Keeps
 async getCreatorKeeps(profileId){
     const res = await api.get(`api/profiles/${profileId}/keeps`)
     logger.log(res.data,"Profile keeps GET")
     AppState.myKeeps = res.data.map(k=>new Keep(k))
 }
+// user NOT account
 async getProfileKeeps(profileId){
     const res = await api.get(`api/profiles/${profileId}/keeps`)
     logger.log(res.data,"Profile keeps GET")
@@ -31,6 +35,15 @@ async getProfileKeeps(profileId){
 //     // res.data.id = AppState.keeps.find(keep=>keep.id==keepId)
 // AppState.activeKeep = new Keep(res.data)
 // }
+
+
+async deleteKeep(keepId){
+    await api.delete(`api/keeps/${keepId}`)
+    const myUpdatedKeeps = AppState.myKeeps.filter(keep =>keep.id != keepId)
+    logger.log(myUpdatedKeeps)
+    const myProfileKeeps = AppState.profileKeeps.filter(keep =>keep.id != keepId)
+    logger.log(myProfileKeeps)
+}
 }
 
 export const keepsService = new KeepsService()
