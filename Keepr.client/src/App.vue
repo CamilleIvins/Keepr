@@ -1,6 +1,6 @@
 <template>
   <body class="bg-img">
-    <header>
+    <header class="mb-3">
       <Navbar />
     </header>
     <main>

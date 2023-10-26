@@ -1,7 +1,7 @@
 <template>
   <section class="container-fluid" v-if="account.id">
     <section class="row">
-      <div class="about text-center px-0">
+      <div class="about text-center mt-3 px-0">
         <img :src="account.coverImg" alt="" class="account-cover position-absolute">
         <div class="welcome font-dancing">Welcome, {{ account.name.slice(0, account.name.indexOf('@')) }}</div>
         <!-- <div class="text-center"> -->

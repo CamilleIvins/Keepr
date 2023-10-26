@@ -4,6 +4,16 @@
 @import "./_utilities.scss";
 @import "./loaders.scss";
 
+:root {
+  --themeWhite: #f9f6fa;
+  --themeCream: #fef6f0;
+  --themeMauve: #ded6e9;
+  --themeBlush: #e9d8d6;
+  --themeFadedAmethyst: #877a8f;
+  --themeCharcoal: #2d2d2d;
+  --backgroundTheme: #d6c5b9;
+}
+
 body {
   overscroll-behavior: none;
 }

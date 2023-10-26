@@ -1,7 +1,7 @@
 <template>
     <section class="container-fluid" v-if="profile.id">
         <section class="row">
-            <div class="about text-center">
+            <div class="about text-center mt-3">
                 <img :src="profile.coverImg" alt="" class="elevation-4 profile-cover position-absolute">
                 <div class="welcome font-dancing">Welcome,</div>
                 <p class="welcome my-0 fs-3">my name is</p>
