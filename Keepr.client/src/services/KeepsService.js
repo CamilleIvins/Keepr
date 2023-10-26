@@ -5,6 +5,14 @@ import { logger } from '../utils/Logger.js';
 
 // TODO - CREATE (api.post, formData, AppState.push) && getByVK (api.get, res.data.map)
 class KeepsService {
+
+    async createKeep(newKeep){
+        const res = await api.post(`api/keeps`, newKeep)
+        const newestKeep =  new Keep(res.data)
+        AppState.keeps.unshift(newestKeep)
+        return newestKeep
+    }
+
 async getKeeps(){
     const res = await api.get('api/keeps')
     logger.log(res,"Kservice GET")

@@ -8,7 +8,7 @@
             <!-- </ModalWrapper> -->
             <div class="overlay-card text-light p-1">
                 <section class="row">
-                    <p class="d-flex align-items-center col-8 ps-3 my-0 fw-bold">{{ keep.name }}</p>
+                    <p class="d-flex align-items-center col-8 ps-3 my-0  font-cour">{{ keep.name }}</p>
                     <router-link class="col-4 d-flex justify-content-end align-items-end align-items-md-center"
                         :to="{ name: 'Profile', params: { profileId: keep.creatorId } }">
 
@@ -99,6 +99,11 @@ export default {
     transition: 0.35s;
 }
 
+.font-cour {
+    color: var(--themeWhite);
+    filter: drop-shadow(0.5px 1px 1px var(--themeWhite));
+}
+
 .overlay-card {
     background: linear-gradient(to top,
             hsl(0, 0%, 0%) 0%,
@@ -126,6 +131,12 @@ export default {
     // height: max-content;
     max-height: 50px;
     max-width: 50px;
+}
+
+.profile-pic:hover {
+    // height: max-content;
+    transform: scale(1.05);
+    transition: 0.35s;
 }
 
 @media screen and (max-width: 768px) {

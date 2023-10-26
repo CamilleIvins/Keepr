@@ -1,49 +1,64 @@
 <template>
-    <div class="container-fluid">
-        <!-- <button @click.prevent="createVault">
+    <div class="modal fade" id="create-keep" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog"
+        aria-labelledby="modalTitleId" aria-hidden="true">
+        <!-- modal SIZE in listed in the below classes -->
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitleId"> Add a Keep!</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <!-- <button @click.prevent="createVault">
     Place this on the navbar, Vaults will be on account
 </button> -->
-        <!-- TODO - HIDE in function 'getOCreateInstance' part on submit -->
+                        <!-- TODO - HIDE in function 'getOCreateInstance' part on submit -->
 
-        <form @submit.prevent="createKeep" class="row">
-            Add a Keep!
-            <div class="mb-1 col-6">
-                <label class="text-dark" for="keep-name">Keep Title</label>
-                <input v-model="keepData.name" id="keep-name" class="form-control" type="text" minlength="3" maxlength="55"
-                    placeholder="Keep Title" required>
-            </div>
 
-            <div class="mb-1 col-12">
-                <label class="text-dark" for="keep-cover">Cover Image</label>
-                <input v-model="keepData.img" type="url" id="keep-cover" class="form-control" minlength="5" maxlength="250"
-                    placeholder="Keep Cover URL">
-            </div>
-            <div class="mb-1 col-12">
-                <img :src="keepData.img" alt="" class="img-fluid preview-img">
-            </div>
-            <!-- check character cap in SQL/Dapper ✅-->
-            <div class="mb-1 col-12">
-                <label for="keep-description" class="text-dark">keep Description</label>
-                <textarea v-model="keepData.description" type="number" id="keep-description" class="form-control"
-                    maxlength="1000" cols="30" rows="10" placeholder="Keep Description"></textarea>
+                        <form @submit.prevent="createKeep" class="row">
+                            <div class="mb-1 col-6">
+                                <label class="text-dark" for="keep-name">Keep Title</label>
+                                <input v-model="keepData.name" id="keep-name" class="form-control" type="text" minlength="3"
+                                    maxlength="55" placeholder="Keep Title" required>
+                            </div>
 
-            </div>
-            <section class="row justify-content-end">
-                <!-- <div class="form-check col-6">
+                            <div class="mb-1 col-12">
+                                <label class="text-dark" for="keep-cover">Cover Image</label>
+                                <input v-model="keepData.img" type="url" id="keep-cover" class="form-control" minlength="5"
+                                    maxlength="250" placeholder="Keep Cover URL">
+                            </div>
+                            <div class="mb-1 col-12">
+                                <img :src="keepData.img" alt="" class="img-fluid preview-img" required>
+                            </div>
+                            <!-- check character cap in SQL/Dapper ✅-->
+                            <div class="mb-1 col-12">
+                                <label for="keep-description" class="text-dark">keep Description</label>
+                                <textarea v-model="keepData.description" type="number" id="keep-description"
+                                    class="form-control" maxlength="1000" cols="30" rows="10" placeholder="Keep Description"
+                                    required></textarea>
+
+                            </div>
+                            <section class="row justify-content-end">
+                                <!-- <div class="form-check col-6">
                     <input class="form-check-input" type="checkbox" value="" id="vault-privacy">
                     <label class="form-check-label" for="flexCheckDefault">
                         Make this vault private?
                     </label>
                 </div> -->
 
-                <div class="col-6 text-end">
-                    <button class="btn text-dark">SUBMIT</button>
+                                <div class="col-6 text-end">
+                                    <button class="btn text-dark">SUBMIT</button>
+                                </div>
+                            </section>
+
+
+                        </form>
+
+                    </div>
                 </div>
-            </section>
-
-
-        </form>
-
+            </div>
+        </div>
     </div>
 </template>
 
@@ -69,15 +84,16 @@ export default {
 
         return {
             keepData,
-            async createVault() {
+            async createKeep() {
                 // remember to try-catch these
                 try {
+                    let newKeep = keepData.value
                     logger.log("create button pushed")
-                    let newKeep = await keepsService.createKeep(keepData.value)
-                    Pop.toast('vault created', 'success')
+                    await keepsService.createKeep(newKeep)
+                    Pop.toast('Keep Created', `This one's a Keepr`)
                     resetForm()
                     // ID is found in NAVBAR
-                    Modal.getOrCreateInstance('#create-keep').hide()
+                    // Modal.getOrCreateInstance('#create-keep').hide()
                     // NOTE - This might not need a push...
                     // router.push({ name: 'Home', params: { keepId: newKeep.id } }) //<--did not like params, still created
 

@@ -6,7 +6,10 @@ import { logger } from '../utils/Logger.js';
 // TODO - CREATE && DELETE the Keeps!!!
 // NOTE Do NOT create or delete the VK itself
 class VaultKeepsService {
-
+async createVK(vkStatus){
+    const res = await api.post(`api/vaultkeeps`, vkStatus)
+    AppState.vaultkeeps.push(new VaultKeep(res.data))
+}
 
     async getVaultKeeps(vaultId){
         const res = await api.get(`api/vaults/${vaultId}/keeps`)

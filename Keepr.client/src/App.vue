@@ -18,6 +18,8 @@
       Made with 💖 and 🦘s
     </footer>
   </body>
+
+  <CreateVaultForm />
 </template>
 
 <script>

@@ -12,7 +12,8 @@
     <div class="modal " :id="id" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog"
         aria-labelledby="modalTitleId" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
+            <!-- background color not changing... -->
+            <div class="modal-content modal-bg">
                 <div class="modal-header">
                     <slot name="header">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -54,5 +55,9 @@ export default {
     border: 0;
     box-shadow: 0 0 10px 2px rgb(218, 218, 218);
     transition: .35s ease;
+}
+
+.modal-bg {
+    background-color: var(-themeBlush);
 }
 </style>

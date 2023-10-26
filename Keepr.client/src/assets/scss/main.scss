@@ -12,6 +12,7 @@
   --themeFadedAmethyst: #877a8f;
   --themeCharcoal: #2d2d2d;
   --backgroundTheme: #d6c5b9;
+  --themeRoo: #d37045;
 }
 
 body {
@@ -55,4 +56,9 @@ form:invalid button[type="submit"] {
 .font-dancing {
   font-family: 'Dancing Script', cursive;
   font-size: 10dvh;
+}
+
+.font-cour {
+  font-family: 'Courgette', cursive;
+  font-size: 2.5dvh;
 }

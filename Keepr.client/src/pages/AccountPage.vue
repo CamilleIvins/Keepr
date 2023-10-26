@@ -15,6 +15,11 @@
 
       <hr class="mt-3">
       <section class="row">
+        <button class="btn theme-btn theme-font col-md-2 col-6 ms-2" data-bs-toggle="modal"
+          data-bs-target="#create-vault">
+          Create a Vault
+
+        </button>
         <p>My Vaults</p>
         <div v-for="vault in myVaults" :key="vault.id" class="col-md-3 col-6 g-3">
           <!-- {{ vault }} -->
@@ -51,6 +56,7 @@ import { keepsService } from '../services/KeepsService.js';
 import Pop from '../utils/Pop.js';
 import VaultCard from '../components/VaultCard.vue';
 import KeepCard from '../components/KeepCard.vue';
+import CreateVaultForm from '../components/CreateVaultForm.vue';
 import { logger } from '../utils/Logger.js';
 import { useRoute } from 'vue-router';
 
@@ -91,7 +97,7 @@ export default {
       myKeeps: computed(() => AppState.myKeeps)
     }
   },
-  components: { VaultCard, KeepCard }
+  components: { VaultCard, KeepCard, CreateVaultForm }
 }
 </script>
 
@@ -124,7 +130,18 @@ img.account-cover {
     0 1px 8px 0 rgba(205, 205, 205, 0.12);
 }
 
+.theme-btn:hover {
+  box-shadow: 0 3px 3px -1px #2d2d2d3b,
+    0 5px 6px 0 #2d2d2d23,
+    0 1px 8px 0 #2d2d2d17;
+  transform: scale(1.02);
+  transition: 0.35s;
+}
 
+.theme-btn {
+  background-color: var(--themeFadedAmethyst);
+  color: var(--themeCream);
+}
 
 @media screen and (min-width: 768px) {
   img.account-cover {

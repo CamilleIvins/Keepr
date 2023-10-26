@@ -17,10 +17,17 @@
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav me-auto">
         <li>
-          <router-link :to="{ name: 'About' }" class="btn theme-btn lighten-30 selectable theme-font">
+          <!-- <router-link :to="{ name: 'About' }" class="btn theme-btn lighten-30 selectable theme-font">
             About
-          </router-link>
+          </router-link> -->
+          <!-- <ModalWrapper id="id" v-if="user.isAuthenticated">s -->
+          <button class="btn selectable theme-btn theme-font" data-bs-toggle="modal" data-bs-target="#create-keep">
+            Create a Keep
+            <CreateKeepForm />
+          </button>
         </li>
+
+
       </ul>
       <!-- LOGIN COMPONENT HERE -->
       <Login />
@@ -30,11 +37,19 @@
 
 <script>
 import Login from './Login.vue';
+import { computed } from 'vue';
+import { AppState } from '../AppState.js';
+import ModalWrapper from './ModalWrapper.vue';
+import CreateKeepForm from './CreateKeepForm.vue';
+import CreateVaultForm from './CreateVaultForm.vue';
 export default {
   setup() {
-    return {}
+    return {
+      user: computed(() => AppState.user)
+
+    }
   },
-  components: { Login }
+  components: { Login, CreateKeepForm }
 }
 </script>
 

@@ -41,29 +41,33 @@
                                 <section class="row align-items-center justify-content-around mt-md-5 mx-0 px-0">
                                     <!-- dropdown, v-if logged in & kept  -->
                                     <div v-if="account.id != null" class="col-3">
-                                        Vault category
+                                        <!-- OR update the keep -->
+                                        <form @submit.prevent="updateVK">
+                                            <label class="mini">Choose a Vault</label>
+                                            <select v-model="editable.vaultId" name="myVaults" id="myVaults"
+                                                class="form-control">
+                                                <option value="" disabled selected>Choose Vault</option>
+                                                <option v-for="vault in myVaults" :key="'select' + vault.id"
+                                                    :value="vault.id">{{ vault.name }}</option>
+                                            </select>
+                                        </form>
                                     </div>
                                     <!-- shows if logged in -->
                                     <!-- save/remove - which will trigger above to show -->
                                     <div v-if="account.id != null" class="col-3">
-                                        Save/Remove button
+
                                         <!-- <div v-if="account.id==keep.creatorId && vaultKeep.keepId == null"> -->
                                         <div v-if="vaultKeep.keepId == null">
                                             <!-- save -->
-                                            <form @submit.prevent="createVK">
-                                                <select v-model="editable.vaultId" name="myVaults" id="myVaults"
-                                                    class="form-control">
-                                                    <option value="" disabled selected>Choose Vault</option>
-                                                    <option v-for="vault in myVaults" :key="'select' + vault.id"
-                                                        :value="vault.id">{{ vault.name }}</option>
-                                                </select>
-                                            </form>
+                                            <button @click="createVK" class="save-keep btn">
+                                                Save
+                                            </button>
                                         </div>
 
                                         <div v-else>
                                             <!-- delete -->
-                                            <button @click="removeVK" class="btn remove-btn">
-
+                                            <button @click="removeVK" class="btn remove-keep">
+                                                Remove
                                                 <!--data-bs-toggle="collapse" data-bs-target="#VaultList">
                                                 <div class="collapse" id="VaultList"> -->
 
@@ -149,8 +153,33 @@ export default {
 }
 
 .profile-pic:hover {
-    max-height: 55px;
+    box-shadow: 0 2px 8px var(--themeFadedAmethyst);
     transition: 0.35s;
+}
+
+.mini {
+    font-size: 1.5dvh;
+    color: var(--themeFadedAmethyst);
+}
+
+.save-keep:hover {
+    background-color: var(--themeFadedAmethyst);
+    color: var(--themeCream);
+}
+
+.save-keep {
+    background-color: var(--themeMauve);
+    color: var(--themeFadedAmethyst);
+}
+
+.remove-keep:hover {
+    background-color: var(--themeFadedAmethyst);
+    color: var(--themeRoo);
+}
+
+.remove-keep {
+    background-color: var(--themeWhite);
+    color: var(--themeRoo);
 }
 
 // .dip {
