@@ -23,10 +23,12 @@ async getKeepById(keepId){
 const res = await api.get(`api/keeps/${keepId}`)
 logger.log(res.data, "keep by Id")
 const keep = new Keep(res.data)
-// add/track views, if not creator
+// add/track views, if not creator -- NOT working, added return...
 AppState.activeKeep = keep
 if(AppState.user != keep.creator){
     keep.views++
+    api.put(`api/keeps/${keepId}`)
+    return keep
 }
 }
 // All Account Keeps
@@ -52,8 +54,8 @@ async deleteKeep(keepId){
     await api.delete(`api/keeps/${keepId}`)
     const myUpdatedKeeps = AppState.myKeeps.filter(keep =>keep.id != keepId)
     logger.log(myUpdatedKeeps)
-    const myProfileKeeps = AppState.profileKeeps.filter(keep =>keep.id != keepId)
-    logger.log(myProfileKeeps)
+    // const myProfileKeeps = AppState.profileKeeps.filter(keep =>keep.id != keepId)
+    // logger.log(myProfileKeeps)
 }
 }
 

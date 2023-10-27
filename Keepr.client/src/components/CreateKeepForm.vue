@@ -83,7 +83,7 @@ export default {
                     logger.log("create button pushed")
                     let newKeep = keepData.value
                     await keepsService.createKeep(newKeep)
-                    Pop.toast('Keep Created', `This one's a Keepr`)
+                    Pop.toast(`This one's a Keepr!`)
                     resetForm()
                     // ID is found in NAVBAR
                     // Modal.getOrCreateInstance('#create-keep').hide()

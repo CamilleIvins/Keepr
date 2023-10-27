@@ -32,6 +32,7 @@ public class KeepsService
     {
         Keep foundKeep = _repo.GetById(keepId);
         if (foundKeep == null) throw new Exception($"Unable to find Keep with ID:{keepId}");
+        // foundKeep.Views++;
         return foundKeep;
     }
 
@@ -42,6 +43,9 @@ public class KeepsService
         original.Name = updateData.Name != null ? updateData.Name : original.Name;
         original.Description = updateData.Description != null ? updateData.Description : original.Description;
         original.Img = updateData.Img ?? original.Img;
+        original.Views = updateData.Views++;
+        original.Kept = updateData.Kept;
+
         _repo.Update(original);
         return original;
     }

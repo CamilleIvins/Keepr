@@ -130,6 +130,8 @@ export default {
 
 }
 
+
+
 .profile-pic {
     // height: max-content;
     max-height: 50px;

@@ -8,11 +8,15 @@ namespace Keepr.Services;
 public class VaultKeepsService
 {
     private readonly VaultKeepsRepository _repo;
+    private readonly KeepsRepository _keepsRepo;
     private readonly VaultsService _vaultsService;
-    public VaultKeepsService(VaultKeepsRepository repo, VaultsService vaultsService)
+    private readonly KeepsService _keepsService;
+    public VaultKeepsService(VaultKeepsRepository repo, VaultsService vaultsService, KeepsService keepsService, KeepsRepository keepsRepo)
     {
         _repo = repo;
         _vaultsService = vaultsService;
+        _keepsService = keepsService;
+        _keepsRepo = keepsRepo;
     }
     // FIXME - and Postman Test!!!!!
     internal VaultKeep Create(VaultKeep vaultKeepsData, Account userInfo)
@@ -22,6 +26,15 @@ public class VaultKeepsService
         if (vault.CreatorId != vaultKeepsData.CreatorId) throw new Exception("Unauthorized");
         // vaultKeepsData.CreatorId = userInfo.Id;
         VaultKeep newVK = _repo.Create(vaultKeepsData);
+        Keep keep = _keepsService.GetById(vaultKeepsData.KeepId);
+        keep.Kept++;
+        _keepsRepo.Update(keep);
+        // if (keep.Id != vaultKeepsData.KeepId) throw new Exception("Error, no keep at this ID");
+        // else
+        // {
+        //     keep.Kept++;
+
+        // }
         return newVK;
 
         // if (userInfo.Id == null)

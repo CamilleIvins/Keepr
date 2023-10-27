@@ -85,7 +85,7 @@ public class VaultKeepsRepository
         {
             vk.KeepId = keep.Id;
             vk.VaultId = vault.Id;
-            keep.VaultKeepId = vault.Id;
+            keep.VaultKeepId = vk.Id;
             keep.Creator = account;
 
             // vk.VaultId = vault.Id;

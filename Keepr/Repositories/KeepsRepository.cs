@@ -17,9 +17,9 @@ public class KeepsRepository : IRepository<Keep, int>
     {
         string sql = @"
         INSERT INTO keeps
-        (name, description, img, views, creatorId)
+        (name, description, img, views, kept, creatorId)
         VALUES
-        (@name, @description, @img, @views, @creatorId);
+        (@name, @description, @img, @views, @kept, @creatorId);
 
         SELECT
         acct.*,
@@ -82,7 +82,9 @@ public class KeepsRepository : IRepository<Keep, int>
         SET
         name = @name,
         description = @description,
-        img = @img
+        img = @img,
+        views = @views,
+        kept = @kept
         WHERE id = @id
         ;";
         _db.Execute(sql, updateData);

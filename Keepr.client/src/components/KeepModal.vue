@@ -5,7 +5,9 @@
         <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="newKeep"></h5>
+                    <i v-if="keep.creatorId == account.id" @click="deleteKeep(keepId)"
+                        class="mdi mdi-cancel text-end delete-keep btn">Delete Keep</i>
+
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -55,23 +57,24 @@
                                             <div v-if="account.id != null" class="d-flex col-3 mt-1 text-end">
 
                                                 <!-- <div v-if="account.id==keep.creatorId && vaultKeep.keepId == null"> -->
-                                                <div v-if="!vaultKeepData.keepId">
+                                                <div>
+                                                    <!-- <div v-if="vaultKeepData.vaultId != vaultKeepData.vaultId"> -->
                                                     <!-- save -->
-                                                    <button @click="createVK" class="save-keep btn">
+                                                    <button class="save-keep btn">
                                                         Save
                                                     </button>
                                                 </div>
 
-                                                <div v-else>
-                                                    <!-- delete -->
-                                                    <button class="btn remove-keep" disabled>
+                                                <!--  <div v-else>
+                                                    delete -->
+                                                <!-- <button class="btn remove-keep" disabled>
                                                         Save
-                                                        <!--data-bs-toggle="collapse" data-bs-target="#VaultList">
-                                                    <div class="collapse" id="VaultList"> -->
+                                                        data-bs-toggle="collapse" data-bs-target="#VaultList">
+                                                    <div class="collapse" id="VaultList"> 
 
-                                                    </button>
+                                                    </button> 
 
-                                                </div>
+                                                </div>-->
                                             </div>
                                         </form>
                                     </div>
@@ -134,9 +137,11 @@ export default {
             // FIXME - VK service
             async createVK() {
                 try {
+                    // debugger
                     vaultKeepData.value.keepId = AppState.activeKeep.id
                     logger.log(vaultKeepData.value)
                     await vaultKeepsService.createVK(vaultKeepData.value)
+                    // AppState.activeKeep.kept++
                 } catch (error) {
                     Pop.error(error)
                 }
@@ -165,12 +170,13 @@ export default {
 
             async deleteKeep(keepId) {
                 try {
-                    keepId = AppState.activeKeep.id
+                    const keepId = AppState.activeKeep.id
                     const deletedKeep = await Pop.confirm("Are you sure you want to delete this Keep?")
                     if (!deletedKeep) {
                         return
                     }
                     await keepsService.deleteKeep(keepId)
+                    return AppState.myKeeps;
                 } catch (error) {
                     Pop.error(error)
                 }
@@ -181,7 +187,7 @@ export default {
             vaultKeepData,
             account: computed(() => AppState.account),
             myVaults: computed(() => AppState.myVaults),
-            vaultKeep: computed(() => AppState.vaultkeep),
+            vaultKeep: computed(() => AppState.activeVaultKeep),
         }
     }
 };
@@ -196,6 +202,16 @@ export default {
 .profile-pic:hover {
     box-shadow: 0 2px 8px var(--themeFadedAmethyst);
     transition: 0.35s;
+}
+
+.delete-keep {
+    color: var(--themeRoo);
+    background-color: var(--themeWhite);
+}
+
+.delete-keep:hover {
+    color: var(--themeWhite);
+    background-color: var(--themeRoo);
 }
 
 .mini {

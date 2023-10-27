@@ -12,25 +12,33 @@
                 <!-- <p>{{ keeps.length }}Keeps</p> -->
             </div>
         </section>
-        <div class="mt-5">
+        <div class="my-5 position-relative">
+
         </div>
-        <div class="mt-5">
+        <div class="mt-5 position-relative">
+
         </div>
         <!-- vault keeps -->
         <section class="row justify-content-center mt-5">
+
             <div v-if="vault.creatorId == account.id" class="col-md-6 col-12 text-center">
                 <button @click="deleteVault" class="btn delete-vault">
                     Delete Vault
                 </button>
             </div>
         </section>
-        <section class="">
-            hello
-            <div v-for="vk in vaultKeeps" :key="vk.id">
-                {{ vaultKeeps }} hello
-                <img :src="vk.img" alt="">
-            </div>
+        <!-- NO col or row -- this will be masonry, again -->
+        <section class="my-2 masonry-layout">
 
+            <div v-for="vk in vaultKeeps" :key="vk.id" class="">
+                <!-- {{ vk.creatorId }} hello -->
+                <VaultKeepCard :vk="vk" v-if="vk.creatorId == account.id" @click="deleteKeep(id)" class="mdi text-end ">
+                </VaultKeepCard>
+                <!-- class="mdi mdi-cancel text-center delete-keep btn">/> -->
+                <!-- <i Delete Keep</i> -->
+                <!-- <img :src="vk.img" alt=""> -->
+                <!-- {{ vk.vaultKeepId }} -->
+            </div>
         </section>
         <section>
 
@@ -50,65 +58,78 @@ import { vaultKeepsService } from '../services/VaultKeepsService.js';
 import Pop from '../utils/Pop.js';
 import { logger } from '../utils/Logger.js';
 import { router } from '../router.js';
+import KeepCard from '../components/KeepCard.vue';
+import VaultKeepCard from '../components/VaultKeepCard.vue';
+import { keepsService } from '../services/KeepsService.js';
+import { VaultKeep } from '../models/Keep.js';
 export default {
     // props: { vault: { type: Vault, required: true }, },
     setup() {
-        const route = useRoute()
-
+        const route = useRoute();
         watchEffect(() => {
-            getVaultById()
-            getkeepsByVault()
-        })
-
+            getVaultById();
+            getkeepsByVault();
+        });
         async function getVaultById() {
             try {
-                const vaultId = route.params.vaultId
-                logger.log(vaultId)
-                await vaultsService.getVaultById(vaultId)
-            } catch (error) {
-                Pop.error(error)
+                const vaultId = route.params.vaultId;
+                logger.log(vaultId);
+                await vaultsService.getVaultById(vaultId);
+            }
+            catch (error) {
+                Pop.error(error);
             }
         }
-
         async function getkeepsByVault() {
             try {
-                const vaultId = route.params.vaultId
-                await vaultKeepsService.getVaultKeeps(vaultId)
-            } catch (error) {
-                Pop.error(error)
+                const vaultId = route.params.vaultId;
+                await vaultKeepsService.getVaultKeeps(vaultId);
+            }
+            catch (error) {
+                Pop.error(error);
             }
         }
-
         return {
-            async deleteVK(vaultKeepId) {
-                try {
-                    const removeVK = await Pop.confirm("Are you sure you wish to remove this Keep from its Vault")
-                    if (!removeVK) { return }
-                    await vaultKeepsService.deleteVK(vaultKeepId)
-                    Pop.toast("Keep successfully removed!")
-                } catch (error) {
-                    Pop.error(error)
-                }
+            // async deleteKeep(vaultKeepId) {
+            //     try {
+            //         const vkeep = vaultKeepId
+            //         const vk = AppState.activeVaultKeep.id
+            //         logger.log(`info to delete`, vkeep)
+            //         const removeVK = await Pop.confirm("Are you sure you wish to remove this Keep from its Vault");
+            //         if (!removeVK) {
+            //             return;
+            //         }
 
-            },
+            //         await vaultKeepsService.deleteVK(vaultKeepId);
+            //         AppState.activeKeep.kept--;
+            //         Pop.toast("Keep successfully removed!");
+            //     }
+            //     catch (error) {
+            //         Pop.error(error);
+            //     }
+            // },
             async deleteVault() {
                 try {
-                    const vaultId = AppState.activeVault.id
-                    const removeVault = await Pop.confirm("Are you sure you wish to delete this Vault?", "All the Keeps within it will also be lost.")
-                    if (!removeVault) { return }
-                    await vaultsService.deleteVault(vaultId)
-                    router.push({ name: 'Account' })
-                    return AppState.myVaults
-                } catch (error) {
-                    Pop.error(error)
+                    const vaultId = AppState.activeVault.id;
+                    const removeVault = await Pop.confirm("Are you sure you wish to delete this Vault?", "All the Keeps within it will also be lost.");
+                    if (!removeVault) {
+                        return;
+                    }
+                    await vaultsService.deleteVault(vaultId);
+                    router.push({ name: 'Account' });
+                    return AppState.myVaults;
+                }
+                catch (error) {
+                    Pop.error(error);
                 }
             },
             account: computed(() => AppState.account),
             vault: computed(() => AppState.activeVault),
-            vaultKeeps: computed(() => AppState.vaultkeeps.find(vk => vk.vaultId == AppState.activeVault.id)),
-
-        }
-    }
+            vaultKeeps: computed(() => AppState.vaultKeeps),
+            activeKeep: computed(() => AppState.activeVaultKeep)
+        };
+    },
+    components: { VaultKeepCard }
 };
 </script>
 
@@ -123,6 +144,18 @@ export default {
     font-size: xxx-large;
     text-shadow: .5px .5px 1px black;
 
+}
+
+.mdi {
+    position: relative;
+    color: var(--themeRoo);
+    // background-color: var(--themeWhite);
+}
+
+.mdi:hover {
+    color: var(--themeRoo);
+    // transform: scale(1.05);
+    // background-color: var(--themeRoo);
 }
 
 .masonry-layout {
@@ -178,14 +211,15 @@ export default {
             0 1px 8px 0 rgba(205, 205, 205, 0.12);
     }
 
-    .delete-vault {
-        background-color: var(--themeMauve);
-        color: var(--themeRoo);
-    }
+}
 
-    .delete-vault:hover {
-        background-color: var(--themeFadedAmethyst);
-        color: var(--themeWhite);
-    }
+.delete-vault {
+    background-color: var(--themeMauve);
+    color: var(--themeRoo);
+}
+
+.delete-vault:hover {
+    background-color: var(--themeFadedAmethyst);
+    color: var(--themeWhite);
 }
 </style>
