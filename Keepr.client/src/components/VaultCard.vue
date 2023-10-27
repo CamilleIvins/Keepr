@@ -20,7 +20,7 @@
             </router-link>
         </div>
         <div v-else class="position-relative hover">
-            <router-link class="col-4" :to="{ name: 'Vault Details', params: { vaultId: vault.id } }">
+            <router-link class="col-4" :to="{ name: 'Home', path: (`/`) }">
                 <img :src="vault.img" class="vaultCover">
                 <div class="overlay-card text-light p-1">
                     <section class="row">

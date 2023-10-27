@@ -23,6 +23,10 @@ async getKeepById(keepId){
 const res = await api.get(`api/keeps/${keepId}`)
 logger.log(res.data, "keep by Id")
 const keep = new Keep(res.data)
+// add/track views, if not creator
+if(AppState.user != keep.creator){
+    keep.views++
+}
 AppState.activeKeep = keep
 }
 

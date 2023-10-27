@@ -64,7 +64,6 @@ export default {
   setup() {
 
     onMounted(() => {
-      getMyVaults()
       getMyKeeps()
     })
     const editable = ref({})
@@ -72,14 +71,14 @@ export default {
       editable.value = { ...AppState.account }
     });
 
-    async function getMyVaults() {
-      try {
-        await accountService.getMyVaults();
-        logger.log("account page vault GET")
-      } catch (error) {
-        Pop.error(error);
-      }
-    }
+    // async function getMyVaults() {
+    //   try {
+    //     await accountService.getMyVaults();
+    //     logger.log("account page vault GET")
+    //   } catch (error) {
+    //     Pop.error(error);
+    //   }
+    // }
     async function getMyKeeps() {
       try {
         const profileId = AppState.account.id

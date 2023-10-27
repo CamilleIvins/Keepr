@@ -73,7 +73,7 @@ public class VaultsService
         // }
         // not allowing to use keys in pVaults
         // _repo.GetProfileVaults(profileId, userId);
-        if (profileId != userId)
+        if (userId == null)
         {
             List<Vault> publicVaults = pVaults.FindAll(pV => pV.IsPrivate == false);        // if(pVaults.IsPrivate == true && pVaults.CreatorId != userId)
             return publicVaults;

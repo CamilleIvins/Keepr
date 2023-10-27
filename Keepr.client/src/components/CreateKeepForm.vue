@@ -86,7 +86,7 @@ export default {
                     Pop.toast('Keep Created', `This one's a Keepr`)
                     resetForm()
                     // ID is found in NAVBAR
-                    Modal.getOrCreateInstance('#create-keep').hide()
+                    // Modal.getOrCreateInstance('#create-keep').hide()
                     // NOTE - This might not need a push...
                     router.push({ name: 'Home' }) //<--did not like params, still created
 

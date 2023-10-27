@@ -32,17 +32,24 @@
 </template>
 
 <script>
-import { computed } from 'vue'
+import { computed, watchEffect } from 'vue'
 import { AppState } from '../AppState'
 import { AuthService } from '../services/AuthService'
+import { accountService } from '../services/AccountService.js';
+import { logger } from '../utils/Logger.js';
+import Pop from '../utils/Pop.js';
+
 export default {
   setup() {
+
     return {
       user: computed(() => AppState.user),
       account: computed(() => AppState.account),
       async login() {
         AuthService.loginWithPopup()
       },
+
+
       async logout() {
         AuthService.logout({ returnTo: window.location.origin })
       }

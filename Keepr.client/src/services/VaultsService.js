@@ -2,13 +2,15 @@ import { AppState } from "../AppState.js"
 import { api } from "./AxiosService.js"
 import { Vault } from "../models/Vault.js"
 import { logger } from '../utils/Logger.js';
+import { accountService } from "./AccountService.js";
 
 // TODO - CREATE (post, push) && DELETE (be sure to add Pop confirms on page || keeps, filter out ID OR ID index and splice (index, 1))
 class VaultsService {
 async createVault(vaultData){
     const res = await api.post(`api/vaults`, vaultData)
     const newVault = new Vault(res.data)
-    AppState.vaults.push(newVault)
+    // AppState.vaults.push(newVault)
+    AppState.myVaults.push(newVault)
     return newVault
 }
 

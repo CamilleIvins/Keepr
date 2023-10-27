@@ -14,14 +14,14 @@ class AccountService {
       logger.error('HAVE YOU STARTED YOUR SERVER YET???', err)
     }
   }
-
-  async getMyVaults(){
+// ⬇️ MOVED to AUTHservice
+  // async getMyVaults(){
    
-      const res = await api.get(`/account/vaults`)
-      logger.log(res, "my vaults")
-      AppState.myVaults = res.data.map(v=>new Vault(v))
+  //     const res = await api.get(`/account/vaults`)
+  //     logger.log(res, "my vaults")
+  //     AppState.myVaults = res.data.map(v=>new Vault(v))
     
-  }
+  // }
 }
 
 export const accountService = new AccountService()

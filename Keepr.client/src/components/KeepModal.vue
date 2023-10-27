@@ -44,7 +44,7 @@
                                         <form @submit.prevent="createVK">
                                             <!-- OR update the keep -->
                                             <label class="mini">Choose a Vault</label>
-                                            <select v-model="editable.vaultId" name="myVaults" id="myVaults"
+                                            <select v-model="vaultKeepData.vaultId" name="myVaults" id="myVaults"
                                                 class="form-control">
                                                 <option value="" disabled selected>Choose Vault</option>
                                                 <option v-for="vault in myVaults" :key="'select' + vault.id"
@@ -55,7 +55,7 @@
                                             <div v-if="account.id != null" class="d-flex col-3 mt-1 text-end">
 
                                                 <!-- <div v-if="account.id==keep.creatorId && vaultKeep.keepId == null"> -->
-                                                <div v-if="vaultKeep.keepId == null">
+                                                <div v-if="!vaultKeepData.keepId">
                                                     <!-- save -->
                                                     <button @click="createVK" class="save-keep btn">
                                                         Save
@@ -102,33 +102,58 @@ import Pop from '../utils/Pop.js';
 import { keepsService } from '../services/KeepsService.js';
 import { vaultKeepsService } from '../services/VaultKeepsService.js';
 import { accountService } from '../services/AccountService.js';
+import { logger } from '../utils/Logger.js';
+import { useRoute } from 'vue-router';
 
 
 export default {
     // props: { keep: { type: Keep || Object, required: true }, },
 
     setup() {
+        const route = useRoute()
+
         onMounted(() => {
-            getMyVaults()
+            // getMyVaults()
         })
 
-        const editable = ref({})
-        async function getMyVaults() {
-            try {
-                await accountService.getMyVaults()
-            } catch (error) {
-                Pop.error(error)
-            }
-        }
+        const vaultKeepData = ref({})
+        // async function getMyVaults() {
+        //     try {
+        //         await accountService.getMyVaults()
+        //     } catch (error) {
+        //         Pop.error(error)
+        //     }
+        // }
 
         return {
             // TODO - VK service
             // FIXME - VK service
-            async createVK(keepId) {
+            async createVK() {
                 try {
-                    const vkStatus = editable.value
-                    vkStatus.keepId = keepId
-                    vaultKeepsService.createVK(vkStatus)
+                    vaultKeepData.value.keepId = AppState.activeKeep.id
+                    logger.log(vaultKeepData.value)
+                    await vaultKeepsService.createVK(vaultKeepData.value)
+                } catch (error) {
+                    Pop.error(error)
+                }
+                // try {
+                //     const vkStatus = editable.value
+                //     vkStatus.keepId = keepId
+                //     vaultKeepsService.createVK(vkStatus)
+                // } catch (error) {
+                //     Pop.error(error)
+                // }
+            },
+
+            async removeVK() {
+                try {
+                    const removeKeep = await Pop.confirm("Are you sure you wish to remove this Keep from its Vault?")
+                    if (!removeKeep) {
+                        return
+                    }
+                    debugger
+
+                    await vaultKeepsService.deleteVK(vaultKeepData)
                 } catch (error) {
                     Pop.error(error)
                 }
@@ -148,7 +173,7 @@ export default {
 
             keep: computed(() => AppState.activeKeep),
             // profile: computed(() => AppState.profile),
-            editable,
+            vaultKeepData,
             account: computed(() => AppState.account),
             myVaults: computed(() => AppState.myVaults),
             vaultKeep: computed(() => AppState.vaultkeep),

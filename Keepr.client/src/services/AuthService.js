@@ -6,6 +6,9 @@ import { accountService } from './AccountService'
 import { api } from './AxiosService'
 import { socketService } from './SocketService'
 
+import { Vault } from "../models/Vault.js"
+import { logger } from '../utils/Logger.js';
+
 export const AuthService = initialize({
   domain,
   clientId,
@@ -27,6 +30,11 @@ AuthService.on(AuthService.AUTH_EVENTS.AUTHENTICATED, async function() {
   await accountService.getAccount()
   socketService.authenticate(AuthService.bearer)
   // NOTE if there is something you want to do once the user is authenticated, place that here
+  const res = await api.get(`/account/vaults`)
+      logger.log(res, "my vaults")
+      AppState.myVaults = res.data.map(v=>new Vault(v))
+    
+  
 })
 
 async function refreshAuthToken(config) {

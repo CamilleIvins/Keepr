@@ -16,7 +16,8 @@
         <!-- vault keeps -->
         <section>
             <div v-for="vk in vaultKeeps" :key="vk.id">
-                <img :src="vaultKeeps.img" alt="">
+                {{ vk.keepId }}
+                <img :src="vk.img" alt="">
             </div>
 
         </section>
@@ -68,7 +69,7 @@ export default {
 
         return {
             vault: computed(() => AppState.activeVault),
-            vaultKeeps: computed(() => AppState.vaultkeeps)
+            vaultKeeps: computed(() => AppState.vaultkeeps.find(vk => vk.vaultId == AppState.activeVault.id))
         }
     }
 };

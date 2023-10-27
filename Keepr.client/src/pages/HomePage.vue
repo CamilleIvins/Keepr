@@ -16,6 +16,7 @@
 
 <script>
 import { computed, onMounted } from 'vue';
+import { accountService } from '../services/AccountService.js';
 import { keepsService } from '../services/KeepsService.js';
 import { logger } from '../utils/Logger.js';
 import Pop from '../utils/Pop.js';
@@ -29,8 +30,18 @@ import KeepCard from '../components/KeepCard.vue';
 export default {
   setup() {
     onMounted(() => {
+
       getKeeps();
     });
+    // async function getMyVaults() {
+    //   try {
+    //     await accountService.getMyVaults();
+    //     logger.log("account page vault GET")
+    //   } catch (error) {
+    //     Pop.error(error);
+    //   }
+    // }
+
     async function getKeeps() {
       try {
         await keepsService.getKeeps();
