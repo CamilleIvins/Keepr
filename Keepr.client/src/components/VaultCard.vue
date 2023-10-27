@@ -6,7 +6,7 @@
                 <img :src="vault.img" class="vaultCover" :alt="vault.name">
                 <div class="overlay-card text-light p-1">
                     <section class="row">
-                        <p class="d-flex align-items-center col-8 ps-3 my-0 fw-bold">{{ vault.name }}</p>
+                        <p class="d-flex align-items-center col-8 ps-3 my-0 fs-md-3 fs-4 font-cour">{{ vault.name }}</p>
                         <router-link class="col-4 d-flex justify-content-end align-items-end align-items-md-center"
                             :to="{ name: 'Profile', params: { profileId: vault.creatorId } }">
                             <!-- TODO toggle this so that it is unlocked or locked on the VAULT DETAILS page -->
@@ -20,18 +20,36 @@
             </router-link>
         </div>
         <div v-else class="position-relative hover">
-            <router-link class="col-4" :to="{ name: 'Home', path: (`/`) }">
-                <img :src="vault.img" class="vaultCover">
-                <div class="overlay-card text-light p-1">
-                    <section class="row">
-                        <p class="d-flex align-items-center col-8 ps-3 my-0 fw-bold">{{ vault.name }}</p>
-                        <span><i class="text-end col-4 mdi mdi-lock-outline text-light">Private</i></span>
-                        <!-- <img class="rounded-circle col-12 my-0 p-md-1 profile-pic" :src="vault.creator.picture"> -->
+            <div v-if="vault.creatorId == account.id">
+                <router-link class="col-4" :to="{ name: 'Vault Details', params: { vaultId: vault.id } }">
+                    <img :src="vault.img" class="vaultCover">
+                    <div class="overlay-card text-light p-1">
+                        <section class="row">
+                            <p class="d-flex align-items-center col-8 ps-3 my-0 fs-md-3 fs-4 font-cour">{{ vault.name }}</p>
+                            <span class="d-flex align-items-end p-1 col-4"><i class="mdi mdi-lock-outline text-light"><span
+                                        class="toggle-text">Private</span></i></span>
+                            <!-- <img class="rounded-circle col-12 my-0 p-md-1 profile-pic" :src="vault.creator.picture"> -->
 
-                    </section>
+                        </section>
+                    </div>
+                </router-link>
+            </div>
+            <div v-else>
+                <router-link class="col-4" :to="{ name: 'Home', path: (`/`) }">
+                    <img :src="vault.img" class="vaultCover">
+                    <div class="overlay-card text-light p-1">
+                        <section class="row">
+                            <p class="d-flex align-items-center col-8 ps-3 my-0 fs-md-3 fs-4 font-cour">{{ vault.name }}</p>
+                            <span class="d-flex align-items-end p-1 col-4"><i class="mdi mdi-lock-outline text-light"><span
+                                        class="toggle-text">Private</span></i></span>
+                            <!-- <img class="rounded-circle col-12 my-0 p-md-1 profile-pic" :src="vault.creator.picture"> -->
 
-                </div>
-            </router-link>
+                        </section>
+
+                    </div>
+                </router-link>
+            </div>
+
         </div>
 
     </div>
@@ -95,6 +113,11 @@ export default {
     transition: 0.35s;
 }
 
+.font-cour {
+    color: var(--themeWhite);
+    filter: drop-shadow(0.5px 1px 1px var(--themeCharcoal));
+}
+
 .overlay-card {
     background: linear-gradient(to top,
             hsl(0, 0%, 0%) 0%,
@@ -125,10 +148,20 @@ export default {
     max-width: 50px;
 }
 
-@media screen and (max-width: 768px) {
+// FIXME - fix this issue w/ display inline vs none
+.toggle-text {
+    display: inline;
+}
+
+@media (max-width: 768px) {
     .profile-pic {
         height: max-content;
         max-height: 50px;
+    }
+
+    .toggle-text {
+        display: none;
+        ;
     }
 }
 </style>

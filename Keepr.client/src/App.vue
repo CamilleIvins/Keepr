@@ -18,8 +18,10 @@
       Made with 💖 and 🦘s
     </footer>
   </body>
-
+  <!-- UNIVERSAL ACCESS to modals, called in location by ID -->
+  <CreateKeepForm />
   <CreateVaultForm />
+  <EditAccountForm />
 </template>
 
 <script>
@@ -28,8 +30,10 @@ import { AppState } from './AppState'
 import Navbar from './components/Navbar.vue'
 import ModalWrapper from './components/ModalWrapper.vue'
 import KeepModal from './components/KeepModal.vue'
-import CreateKeepForm from './components/CreateKeepForm.vue'
-import CreateVaultForm from './components/CreateVaultForm.vue'
+// These do not get called locally, are not 'components', per se
+// import CreateKeepForm from './components/CreateKeepForm.vue'
+// import CreateVaultForm from './components/CreateVaultForm.vue'
+// import EditAccountForm from './components/EditAccountForm.vue'
 
 export default {
   setup() {

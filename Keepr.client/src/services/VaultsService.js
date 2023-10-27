@@ -32,6 +32,13 @@ AppState.profileVaults = res.data.map(v=> new Vault(v))
 async getVaultById(vaultId){
     const res = await api.get(`api/vaults/${vaultId}`)
     AppState.activeVault = new Vault(res.data)
+    return AppState.activeVault
+}
+
+async deleteVault(vaultId){
+    await api.delete(`api/vaults/${vaultId}`)
+    const filteredVaults = AppState.myVaults.filter(v => v.id != vaultId)
+    logger.log(filteredVaults)
 }
 }
 

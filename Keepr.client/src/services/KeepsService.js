@@ -24,12 +24,11 @@ const res = await api.get(`api/keeps/${keepId}`)
 logger.log(res.data, "keep by Id")
 const keep = new Keep(res.data)
 // add/track views, if not creator
+AppState.activeKeep = keep
 if(AppState.user != keep.creator){
     keep.views++
 }
-AppState.activeKeep = keep
 }
-
 // All Account Keeps
 async getCreatorKeeps(profileId){
     const res = await api.get(`api/profiles/${profileId}/keeps`)

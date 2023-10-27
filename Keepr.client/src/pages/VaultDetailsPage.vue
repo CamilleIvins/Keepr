@@ -1,22 +1,33 @@
 <template>
-    <section class="d-flex flex-column col-9 container-fluid" v-if="vault.id">
+    <section class="d-flex flex-column col-9 container-fluid mb-5" v-if="vault.id">
 
         <section class="row justify-content-center">
             <div class="col-md-8 col-12">
                 <img :src="vault.img" class="vault-cover" alt="">
-                <div class="text-center fs-1 img-title">
+                <div class="text-center fs-1 img-title font-dancing">
                     {{ vault.name }}
                 </div>
-                <div>
-                    <!-- {{ hello }} -->
-                </div>
             </div>
-
+            <div class="text-center mt-5">
+                <!-- <p>{{ keeps.length }}Keeps</p> -->
+            </div>
         </section>
+        <div class="mt-5">
+        </div>
+        <div class="mt-5">
+        </div>
         <!-- vault keeps -->
-        <section>
+        <section class="row justify-content-center mt-5">
+            <div v-if="vault.creatorId == account.id" class="col-md-6 col-12 text-center">
+                <button @click="deleteVault" class="btn delete-vault">
+                    Delete Vault
+                </button>
+            </div>
+        </section>
+        <section class="">
+            hello
             <div v-for="vk in vaultKeeps" :key="vk.id">
-                {{ vk.keepId }}
+                {{ vaultKeeps }} hello
                 <img :src="vk.img" alt="">
             </div>
 
@@ -38,6 +49,7 @@ import { vaultsService } from '../services/VaultsService.js';
 import { vaultKeepsService } from '../services/VaultKeepsService.js';
 import Pop from '../utils/Pop.js';
 import { logger } from '../utils/Logger.js';
+import { router } from '../router.js';
 export default {
     // props: { vault: { type: Vault, required: true }, },
     setup() {
@@ -68,8 +80,33 @@ export default {
         }
 
         return {
+            async deleteVK(vaultKeepId) {
+                try {
+                    const removeVK = await Pop.confirm("Are you sure you wish to remove this Keep from its Vault")
+                    if (!removeVK) { return }
+                    await vaultKeepsService.deleteVK(vaultKeepId)
+                    Pop.toast("Keep successfully removed!")
+                } catch (error) {
+                    Pop.error(error)
+                }
+
+            },
+            async deleteVault() {
+                try {
+                    const vaultId = AppState.activeVault.id
+                    const removeVault = await Pop.confirm("Are you sure you wish to delete this Vault?", "All the Keeps within it will also be lost.")
+                    if (!removeVault) { return }
+                    await vaultsService.deleteVault(vaultId)
+                    router.push({ name: 'Account' })
+                    return AppState.myVaults
+                } catch (error) {
+                    Pop.error(error)
+                }
+            },
+            account: computed(() => AppState.account),
             vault: computed(() => AppState.activeVault),
-            vaultKeeps: computed(() => AppState.vaultkeeps.find(vk => vk.vaultId == AppState.activeVault.id))
+            vaultKeeps: computed(() => AppState.vaultkeeps.find(vk => vk.vaultId == AppState.activeVault.id)),
+
         }
     }
 };
@@ -139,6 +176,16 @@ export default {
         box-shadow: 0 3px 3px -1px rgba(205, 205, 205, 0.2),
             0 5px 6px 0 rgba(205, 205, 205, 0.14),
             0 1px 8px 0 rgba(205, 205, 205, 0.12);
+    }
+
+    .delete-vault {
+        background-color: var(--themeMauve);
+        color: var(--themeRoo);
+    }
+
+    .delete-vault:hover {
+        background-color: var(--themeFadedAmethyst);
+        color: var(--themeWhite);
     }
 }
 </style>

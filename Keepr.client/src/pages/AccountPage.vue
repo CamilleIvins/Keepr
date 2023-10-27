@@ -7,9 +7,12 @@
         <!-- <div class="text-center"> -->
         <img class="rounded-circle profile-pic mb-5" :src="account.picture" alt="" />
         <!-- </div> -->
+        <div class="text-center mt-5">
+          <p>{{ myVaults.length }}Vaults||{{ myKeeps.length }}Keeps</p>
+        </div>
       </div>
-      <div class="mt-5 text-center">
-        <p class="mt-5">{{ account.email }}</p>
+      <div class=" text-center">
+        <p class="mt-2">{{ account.email }}</p>
       </div>
 
 
@@ -65,6 +68,7 @@ export default {
 
     onMounted(() => {
       getMyKeeps()
+      AppState.myVaults
     })
     const editable = ref({})
     watchEffect(() => {

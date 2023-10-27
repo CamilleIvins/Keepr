@@ -9,7 +9,7 @@
                 <img class="rounded-circle profile-pic" :src="profile.picture" alt="" />
             </div>
             <div class="text-center mt-5">
-                <p>#vault||#keep</p>
+                <p>{{ vaults.length }}Vaults||{{ keeps.length }}Keeps</p>
             </div>
 
             <hr class="mt-3">

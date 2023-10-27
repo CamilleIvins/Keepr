@@ -8,7 +8,7 @@
             <!-- </ModalWrapper> -->
             <div class="overlay-card text-light p-1">
                 <section class="row">
-                    <p class="d-flex align-items-center col-8 ps-3 my-0  font-cour">{{ keep.name }}</p>
+                    <p class="d-flex align-items-center col-8 ps-3 my-0 fs-md-3 fs-5 font-cour">{{ keep.name }}</p>
                     <router-link class="col-4 d-flex justify-content-end align-items-end align-items-md-center"
                         :to="{ name: 'Profile', params: { profileId: keep.creatorId } }">
 
@@ -46,6 +46,7 @@ export default {
                     const keepId = props.keep.id;
                     logger.log(keepId);
                     await keepsService.getKeepById(keepId);
+
                     // const modal = Modal.getOrCreateInstance('#keep-modal')
                     // modal.show()
                 }
@@ -53,6 +54,7 @@ export default {
                     Pop.error(error);
                 }
             },
+
             // THIS WILL GO INTO MODAL
             // async deleteKeep(keepId) {
             //     try {
@@ -102,7 +104,7 @@ export default {
 
 .font-cour {
     color: var(--themeWhite);
-    filter: drop-shadow(0.5px 1px 1px var(--themeWhite));
+    filter: drop-shadow(0.5px 1px 1px var(--themeCharcoal));
 }
 
 .overlay-card {

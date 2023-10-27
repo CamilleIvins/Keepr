@@ -85,8 +85,7 @@ export default {
         return {
             vaultData,
             async createVault() {
-                // remember to try-catch these
-                debugger
+                // remember to try-catch these, remove debugger ✅
                 try {
                     logger.log("create button pushed")
                     let newVault = await vaultsService.createVault(vaultData.value)

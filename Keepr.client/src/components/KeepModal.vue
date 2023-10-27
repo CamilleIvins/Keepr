@@ -64,8 +64,8 @@
 
                                                 <div v-else>
                                                     <!-- delete -->
-                                                    <button @click="removeVK" class="btn remove-keep">
-                                                        Remove
+                                                    <button class="btn remove-keep" disabled>
+                                                        Save
                                                         <!--data-bs-toggle="collapse" data-bs-target="#VaultList">
                                                     <div class="collapse" id="VaultList"> -->
 
@@ -77,11 +77,15 @@
                                     </div>
                                     <!-- shows always -->
                                     <!-- creator pic -->
-                                    <div class="text-end col-6 dip">
-                                        <img class="profile-pic rounded-circle" :src="keep.creator.picture"
-                                            :title="keep.creator.name" data-toggle="name" data-placement="bottom"
-                                            alt="Keep Creator"> {{ keep.creator.name.slice(0,
-                                                keep.creator.name.indexOf('@')) }}
+                                    <div class="text-end col-6">
+                                        <router-link class=" theme-font"
+                                            :to="{ name: 'Profile', params: { profileId: keep.creatorId } }">
+
+                                            <img class="profile-pic rounded-circle" :src="keep.creator.picture"
+                                                :title="keep.creator.name" data-toggle="name" data-placement="bottom"
+                                                alt="Keep Creator"> {{ keep.creator.name.slice(0,
+                                                    keep.creator.name.indexOf('@')) }}
+                                        </router-link>
                                     </div>
                                 </section>
                             </section>
@@ -144,23 +148,24 @@ export default {
                 //     Pop.error(error)
                 // }
             },
+            // Move to Vault Details Page
+            // async removeVK() {
+            //     try {
+            //         const removeKeep = await Pop.confirm("Are you sure you wish to remove this Keep from its Vault?")
+            //         if (!removeKeep) {
+            //             return
+            //         }
+            //         debugger
 
-            async removeVK() {
-                try {
-                    const removeKeep = await Pop.confirm("Are you sure you wish to remove this Keep from its Vault?")
-                    if (!removeKeep) {
-                        return
-                    }
-                    debugger
-
-                    await vaultKeepsService.deleteVK(vaultKeepData)
-                } catch (error) {
-                    Pop.error(error)
-                }
-            },
+            //         await vaultKeepsService.deleteVK(vaultKeepData)
+            //     } catch (error) {
+            //         Pop.error(error)
+            //     }
+            // },
 
             async deleteKeep(keepId) {
                 try {
+                    keepId = AppState.activeKeep.id
                     const deletedKeep = await Pop.confirm("Are you sure you want to delete this Keep?")
                     if (!deletedKeep) {
                         return
@@ -195,6 +200,10 @@ export default {
 
 .mini {
     font-size: 1.5dvh;
+    color: var(--themeFadedAmethyst);
+}
+
+.theme-font {
     color: var(--themeFadedAmethyst);
 }
 

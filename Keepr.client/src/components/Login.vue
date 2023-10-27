@@ -20,6 +20,10 @@
                 Manage Account
               </div>
             </router-link>
+            <div data-bs-toggle="modal" data-bs-target="#edit-account"
+              class="list-group-item dropdown-item list-group-item-action">
+              Edit Account
+            </div>
             <div class="list-group-item dropdown-item list-group-item-action text-danger selectable" @click="logout">
               <i class="mdi mdi-logout"></i>
               logout
@@ -41,6 +45,7 @@ import Pop from '../utils/Pop.js';
 
 export default {
   setup() {
+
 
     return {
       user: computed(() => AppState.user),

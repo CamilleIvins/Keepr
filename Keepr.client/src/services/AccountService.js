@@ -14,6 +14,15 @@ class AccountService {
       logger.error('HAVE YOU STARTED YOUR SERVER YET???', err)
     }
   }
+
+async editAccount(updateData){
+  
+    const res = await api.put(`/account`, updateData)
+    logger.log(res.data)
+    AppState.account = new Account(res.data)
+
+}
+
 // ⬇️ MOVED to AUTHservice
   // async getMyVaults(){
    
