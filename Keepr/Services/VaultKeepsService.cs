@@ -26,7 +26,7 @@ public class VaultKeepsService
         if (vault.CreatorId != vaultKeepsData.CreatorId) throw new Exception("Unauthorized");
         // vaultKeepsData.CreatorId = userInfo.Id;
         VaultKeep newVK = _repo.Create(vaultKeepsData);
-        Keep keep = _keepsService.GetById(vaultKeepsData.KeepId);
+        Keep keep = _keepsService.GetById(vaultKeepsData.KeepId, userInfo.Id);
         keep.Kept++;
         _keepsRepo.Update(keep);
         // if (keep.Id != vaultKeepsData.KeepId) throw new Exception("Error, no keep at this ID");

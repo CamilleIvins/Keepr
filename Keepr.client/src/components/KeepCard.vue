@@ -12,8 +12,8 @@
                     <router-link class="col-4 d-flex justify-content-end align-items-end align-items-md-center"
                         :to="{ name: 'Profile', params: { profileId: keep.creatorId } }">
 
-                        <img class="rounded-circle col-12 my-0 p-md-1 profile-pic" :src="keep.creator.picture"
-                            :alt="keep.creator.name">
+                        <img class="rounded-circle col-12 my-0 p-md-1 profile-pic" :title="keep.creator.name"
+                            data-toggle="name" data-placement="bottom" :src="keep.creator.picture" :alt="keep.creator.name">
                     </router-link>
                 </section>
 

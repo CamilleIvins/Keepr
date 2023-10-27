@@ -1,6 +1,6 @@
 <template>
     <div class="hover position-relative">
-        <button @click="deleteKeep" v-if="vk.creatorId == account.id" class="mdi mdi- text-center delete-keep btn">Delete
+        <button @click="deleteKeep" v-if="account.id" class="mdi mdi- text-center delete-keep btn">Delete
             Keep</button>
         <img v-if="vk.id" :src="vk.img" class="keepCover" :alt="vk.name">
         <!-- </ModalWrapper> -->

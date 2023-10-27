@@ -86,8 +86,7 @@
 
                                             <img class="profile-pic rounded-circle" :src="keep.creator.picture"
                                                 :title="keep.creator.name" data-toggle="name" data-placement="bottom"
-                                                alt="Keep Creator"> {{ keep.creator.name.slice(0,
-                                                    keep.creator.name.indexOf('@')) }}
+                                                alt="Keep Creator"> {{ keep.creator.name }}
                                         </router-link>
                                     </div>
                                 </section>
@@ -141,6 +140,7 @@ export default {
                     vaultKeepData.value.keepId = AppState.activeKeep.id
                     logger.log(vaultKeepData.value)
                     await vaultKeepsService.createVK(vaultKeepData.value)
+                    Pop.toast("This Keep's been kept!")
                     // AppState.activeKeep.kept++
                 } catch (error) {
                     Pop.error(error)

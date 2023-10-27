@@ -46,11 +46,12 @@ public class KeepsController : ControllerBase
     }
 
     [HttpGet("{keepId}")]
-    public ActionResult<Keep> GetKeepById(int keepId)
+    public async Task<ActionResult<Keep>> GetKeepById(int keepId)
     {
         try
         {
-            Keep keep = _keepsService.GetById(keepId);
+            Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
+            Keep keep = _keepsService.GetById(keepId, userInfo?.Id);
             return keep;
         }
         catch (Exception e)

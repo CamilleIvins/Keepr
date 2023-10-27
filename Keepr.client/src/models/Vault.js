@@ -9,6 +9,6 @@ export class Vault {
         this.img = data.img
         this.isPrivate = data.isPrivate || false;
         this.creatorId = data.creatorId
-        this.creator = new Profile(data.creator)
+        this.creator = data.creator
     }
 }

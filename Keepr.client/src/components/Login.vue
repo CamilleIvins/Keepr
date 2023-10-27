@@ -9,8 +9,10 @@
       <div v-if="account.id" class="dropdown my-2 my-lg-0">
         <div type="button" class=" border-0 selectable no-select" data-bs-toggle="dropdown" aria-expanded="false">
           <div v-if="account.picture || user.picture" class="account-name theme-font">
-            <img :src="account.picture || user.picture" alt="account photo" height="40" class="rounded" />
-            {{ account.name.slice(0, account.name.indexOf('@')) }}
+            <img :src="account.picture || user.picture" alt="account photo" height="40" class="rounded-circle" />
+            {{ account.name }}
+            <!-- take out of card, too -->
+            <!-- {{ account.name.slice(0, account.name.indexOf('@')) }} -->
           </div>
         </div>
         <div class="dropdown-menu dropdown-menu-lg-end dropdown-menu-start p-0" aria-labelledby="authDropdown">

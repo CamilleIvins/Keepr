@@ -8,10 +8,10 @@
         <img class="rounded-circle profile-pic mb-5" :src="account.picture" alt="" />
         <!-- </div> -->
         <div class="text-center mt-5">
-          <p>{{ myVaults.length }}Vaults||{{ myKeeps.length }}Keeps</p>
         </div>
       </div>
-      <div class=" text-center">
+      <div class=" text-center mt-5">
+        <p class="mt-md-5 mt-2">{{ myVaults.length }}Vaults||{{ myKeeps.length }}Keeps</p>
         <p class="mt-2">{{ account.email }}</p>
       </div>
 

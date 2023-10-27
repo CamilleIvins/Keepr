@@ -5,7 +5,7 @@ using Keepr.Interfaces;
 
 namespace Keepr.Repositories;
 
-public class KeepsRepository : IRepository<Keep, int>
+public class KeepsRepository
 {
 
     private readonly IDbConnection _db;

@@ -19,7 +19,8 @@
 
         </div>
         <!-- vault keeps -->
-        <section class="row justify-content-center mt-5">
+        <div class="mt-3 text-center">{{ vaultKeeps.length }} Keeps in {{ vault.name }}</div>
+        <section class="row justify-content-center mt-3">
 
             <div v-if="vault.creatorId == account.id" class="col-md-6 col-12 text-center">
                 <button @click="deleteVault" class="btn delete-vault">
@@ -32,7 +33,7 @@
 
             <div v-for="vk in vaultKeeps" :key="vk.id" class="">
                 <!-- {{ vk.creatorId }} hello -->
-                <VaultKeepCard :vk="vk" v-if="vk.creatorId == account.id" @click="deleteKeep(id)" class="mdi text-end ">
+                <VaultKeepCard :vk="vk" @click="deleteKeep(id)" class="mdi text-end ">
                 </VaultKeepCard>
                 <!-- class="mdi mdi-cancel text-center delete-keep btn">/> -->
                 <!-- <i Delete Keep</i> -->
@@ -77,7 +78,7 @@ export default {
                 await vaultsService.getVaultById(vaultId);
             }
             catch (error) {
-                Pop.error(error);
+                router.push({ name: `Home` })
             }
         }
         async function getkeepsByVault() {

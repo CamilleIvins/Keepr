@@ -10,7 +10,7 @@ export class Keep {
         this.kept = data.kept
         this.createdAt = data.createdAt
         this.creatorId = data.creatorId
-        this.creator = new Profile(data.creator)
+        this.creator = data.creator
     }
 }
 

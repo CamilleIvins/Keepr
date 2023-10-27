@@ -34,8 +34,7 @@
                                     id="picture" placeholder="Picture">
                             </div>
                             <div class="mb-1 col-12 d-flex justify-content-center">
-                                <img :src="accountData.picture" alt="" class="preview-img rounded-circle"
-                                    style="max-height: 25;">
+                                <img :src="accountData.picture" alt="" class="preview-img" style="max-height: 25;">
                             </div>
                             <hr>
                             <!-- SAVE FOR A MORE AMBITIOUS DAY -->
@@ -139,8 +138,8 @@ export default {
 
 <style lang="scss" scoped>
 .preview-img {
-
+    // aspect-ratio: 1/1;
     width: 50%;
-    height: auto
+    // height: auto
 }
 </style>
