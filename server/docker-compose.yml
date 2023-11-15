@@ -1,0 +1,7 @@
+version: '3'
+services:
+  web:
+    # image: your-dockerhub-username/your-image-name:latest
+    image: camilleivins/outofharbor:latest
+    ports:
+      - "80:80" 
