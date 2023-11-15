@@ -4,4 +4,4 @@ services:
     # image: your-dockerhub-username/your-image-name:latest
     image: camilleivins/outofharbor:latest
     ports:
-      - "80:80" 
+      - "7045:80" 
