@@ -1,14 +1,14 @@
 <template>
-    <div class="modal fade" id="keep-modal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog"
+    <div class="modal fade" id="keep-modal" tabindex="-1" data-bs-keyboard="false" role="dialog"
         aria-labelledby="modalTitleId" aria-hidden="true">
         <!-- modal SIZE in listed in the below classes -->
         <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="">
                     <i v-if="keep.creatorId == account.id" @click="deleteKeep(keepId)"
                         class="mdi mdi-cancel text-end delete-keep btn">Delete Keep</i>
 
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
                 </div>
                 <div class="modal-body">
                     <div class="container-fluid">
