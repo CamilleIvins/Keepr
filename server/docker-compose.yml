@@ -1,7 +1,10 @@
 version: '3'
 services:
-  web:
+  app:
     # image: your-dockerhub-username/your-image-name:latest
-    image: camilleivins/outofharbor:latest
+    image: camilleivins/keepr:latest
+    env_file:
+      - keepr-env
     ports:
-      - "7045:80" 
+      - "7045:80"
+    restart: unless-stopped
